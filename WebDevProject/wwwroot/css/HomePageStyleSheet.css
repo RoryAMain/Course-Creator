@@ -1,0 +1,76 @@
+﻿body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.mainBody {
+}
+
+/*Header*/
+.topPane {
+    height: 5vh;
+    text-align: center;
+}
+
+/*Left area for lesson list*/
+.leftPane {
+    overflow: hidden;
+    border: solid;
+    border-color: lightslategray;
+}
+
+.expandableMiddlePane {
+    overflow: hidden;
+    border: solid;
+    border-color: lightslategray;
+    display: none;
+}
+
+.expandableRightPane {
+    overflow: hidden;
+    border: solid;
+    border-color: lightslategray;
+    display: none;
+}
+
+.listPane ul {
+    list-style-type: none
+}
+
+/*Right area for home page text/videos/images*/
+.rightPane {
+    overflow: hidden;
+    text-align: left;
+    display: inline-block;
+}
+
+/*Any element with this class is scrollable, and has a height limited to the screen height-the header height.*/
+.scrollable-menu {
+    height: auto;
+    max-height: 95vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/*This only works for Chrome and Safari, if we want to hide scrollbars in other browsers, we will need to add other implementations.*/
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+.YoutubeVideo iframe {
+    width: 420px;
+    height: 315px;
+    margin: auto;
+}
+
+.UploadVideo video {
+    width: 420px;
+    height: 315px;
+    margin: auto;
+}
+
+.multChoicePane {
+    text-align: left;
+}

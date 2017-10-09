@@ -1,0 +1,6 @@
+﻿{
+  "ConnectionStrings": {
+    "ModelContextConnection": "Server=(localdb)\\MSSQLLocalDB;Database=490ProjectDb;Trusted_Connection=true;MultipleActiveResultSEts=true"
+  }
+
+}
