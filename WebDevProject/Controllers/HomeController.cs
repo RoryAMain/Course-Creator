@@ -28,5 +28,20 @@ namespace WebDevProject.Controllers
         {
             return View();
         }
+
+        public IActionResult ModuleView()
+        {
+            return View();
+        }
+
+        public IActionResult TopicView()
+        {
+            return View();
+        }
+
+        public IActionResult MultipleChoiceView()
+        {
+            return View();
+        }
     }
 }
