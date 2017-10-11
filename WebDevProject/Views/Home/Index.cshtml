@@ -1,4 +1,6 @@
-﻿  <!-- This container div holds the whole page. -->
+﻿@model WebDevProject.Models.IndexViewModel
+  
+<!-- This container div holds the whole page. -->
     <div class="container mainBody">
         <!-- The row div holds the left and right pane, which is a majority of the page. -->
         <div class="row">
@@ -8,11 +10,10 @@
                 <div>
                     <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
                     <ul>
-                        <li><button id="middleTest" style="color:black">Module Name 1</button></li>
-                        <li><button id="middleTest" style="color:black">Module Name 2</button></li>
-                        <li><button id="middleTest" style="color:black">Module Name 3</button></li>
-                        <li><button id="middleTest" style="color:black">Module Name 4</button></li>
-                        <li><button id="middleTest" style="color:black">Module Name 5</button></li>
+                        @foreach (var item in Model.Modules)
+                        {
+                            <li><a href="/Home/ModuleView/@item.Id">@item.moduleTitle</a><button id="middleTest" style="color:black">-></button></li>
+                        }
                     </ul>
                 </div>
             </div>

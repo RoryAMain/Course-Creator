@@ -26,7 +26,22 @@ namespace WebDevProject.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            var moduleInfo = from mod in _context.Module
+                              select mod;
+
+            IndexViewModel model = new IndexViewModel();
+
+            IList<Module> modules = null;
+            if(moduleInfo != null)
+            {
+                model.Modules = (from module in moduleInfo
+                                 select new Module()
+                                 {
+                                     moduleTitle = module.moduleTitle,
+                                     Id = module.Id
+                                 }).ToList();
+            }
+            return View(model);
         }
 
         public IActionResult ModuleView(int Id)

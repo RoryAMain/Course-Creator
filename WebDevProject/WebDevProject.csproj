@@ -7,12 +7,12 @@
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
     <Folder Include="Controllers\Web\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="ViewModels\IndexViewModel.cs" />
     <None Include="wwwroot\css\HomePageStyleSheet.css" />
     <None Include="wwwroot\js\HomeTestScript.js" />
   </ItemGroup>
