@@ -1,4 +1,5 @@
-﻿  <!-- This container div holds the whole page. -->
+﻿@model WebDevProject.Models.Module
+<!-- This container div holds the whole page. -->
 <div class="container mainBody">
     <!-- The row div holds the left and right pane, which is a majority of the page. -->
     <div class="row">
@@ -168,12 +169,12 @@
 
             <!-- This place can be filled with teacher supplied text. We should probably still sanitize this input somehow. -->
             <div class="jumbotron">
-                <h1>Module Header</h1>
-                <p>Did you ever hear the tragedy of Darth Plagueis The Wise? I thought not. It’s not a story the Jedi would tell you. It’s a Sith legend. Darth Plagueis was a Dark Lord of the Sith, so powerful and so wise he could use the Force to influence the midichlorians to create life… He had such a knowledge of the dark side that he could even keep the ones he cared about from dying. The dark side of the Force is a pathway to many abilities some consider to be unnatural. He became so powerful… the only thing he was afraid of was losing his power, which eventually, of course, he did. Unfortunately, he taught his apprentice everything he knew, then his apprentice killed him in his sleep. Ironic. He could save others from death, but not himself.</p>
+                <h1>@Html.DisplayFor(model => model.moduleTitle)</h1>
+                <p>@Html.DisplayFor(model => model.lectureText)</p>
             </div>
             <!-- We can put a teacher supplied Youtube link here to display it. -->
             <div class="YoutubeVideo">
-                <iframe src="https://www.youtube.com/embed/q6EoRBvdVPQ" frameborder="0" allowfullscreen></iframe>
+                <iframe src="@Html.DisplayFor(model => model.videoURL)" frameborder="0" allowfullscreen></iframe>
             </div>
 
             <!-- We can put a teacher supplied mp4/ogg file here to display it, currently it must be name "Video.mp4" or "Video.ogg -->

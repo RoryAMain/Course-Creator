@@ -29,9 +29,10 @@ namespace WebDevProject.Controllers
             return View();
         }
 
-        public IActionResult ModuleView()
+        public IActionResult ModuleView(int Id)
         {
-            return View();
+            Module module = _context.Module.SingleOrDefault(mod => mod.Id == Id);
+            return View(module);
         }
 
         public IActionResult TopicView()
