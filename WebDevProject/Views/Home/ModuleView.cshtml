@@ -1,4 +1,4 @@
-﻿@model WebDevProject.Models.Module
+﻿@model WebDevProject.Models.ModuleViewModel
 <!-- This container div holds the whole page. -->
 <div class="container mainBody">
     <!-- The row div holds the left and right pane, which is a majority of the page. -->
@@ -9,159 +9,13 @@
             <div>
                 <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
                 <ul>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
+                    @foreach (var item in Model.Topics)
+                    {
+                        <li><a href="/Home/TopicView/@item.Id">@item.topicTitle</a><button id="rightTest" style="color:black">-></button></li>
+                    }
                 </ul>
             </div>
-        </div>
 
-        <div class="col-4 scrollable-menu expandableMiddlePane listPane">
-            <div>
-                <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
-                <ul>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-4 scrollable-menu expandableRightPane listPane">
-            <div>
-                <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
-                <ul>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                    <li>List Item</li>
-                </ul>
-            </div>
         </div>
 
         <!-- The rightPane holds all instructor material. Later it can also be covered up by expanding lists, which I haven't made. col-8 defines it as 8 pandels wide in bootstrap, scrollable-menu let's CSS apply scrolling to it, and rightPane allows CSS to customize it specifically. -->
@@ -169,12 +23,12 @@
 
             <!-- This place can be filled with teacher supplied text. We should probably still sanitize this input somehow. -->
             <div class="jumbotron">
-                <h1>@Html.DisplayFor(model => model.moduleTitle)</h1>
-                <p>@Html.DisplayFor(model => model.lectureText)</p>
+                <h1>@Html.DisplayFor(model => model.theModule.moduleTitle)</h1>
+                <p>@Html.DisplayFor(model => model.theModule.lectureText)</p>
             </div>
             <!-- We can put a teacher supplied Youtube link here to display it. -->
             <div class="YoutubeVideo">
-                <iframe src="@Html.DisplayFor(model => model.videoURL)" frameborder="0" allowfullscreen></iframe>
+                <iframe src="@Html.DisplayFor(model => model.theModule.videoURL)" frameborder="0" allowfullscreen></iframe>
             </div>
 
             <!-- We can put a teacher supplied mp4/ogg file here to display it, currently it must be name "Video.mp4" or "Video.ogg -->

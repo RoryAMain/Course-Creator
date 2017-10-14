@@ -31,7 +31,6 @@ namespace WebDevProject.Controllers
 
             IndexViewModel model = new IndexViewModel();
 
-            IList<Module> modules = null;
             if(moduleInfo != null)
             {
                 model.Modules = (from module in moduleInfo
@@ -46,13 +45,51 @@ namespace WebDevProject.Controllers
 
         public IActionResult ModuleView(int Id)
         {
+            var topicInfo = from top in _context.Topic
+                            where top.ModuleId == Id
+                            select top;
+
+            ModuleViewModel model = new ModuleViewModel();
+
             Module module = _context.Module.SingleOrDefault(mod => mod.Id == Id);
-            return View(module);
+
+            if (topicInfo != null)
+            {
+                model.Topics = (from top in topicInfo
+                                 select new Topic()
+                                 {
+                                     topicTitle = top.topicTitle,
+                                     Id = top.Id
+                                 }).ToList();
+            }
+
+            model.theModule = module;
+
+            return View(model);
         }
 
-        public IActionResult TopicView()
+        public IActionResult TopicView(int Id)
         {
-            return View();
+            var questionInfo = from q in _context.Question
+                               where q.TopicId == Id
+                               select q;
+
+            TopicViewModel model = new TopicViewModel();
+
+            Topic topic = _context.Topic.SingleOrDefault(top => top.Id == Id);
+
+            if (questionInfo != null)
+            {
+                model.Questions = (from q in questionInfo
+                                select new Question()
+                                {
+                                    Id = q.Id
+                                }).ToList();
+            }
+
+            model.theTopic = topic;
+
+            return View(model);
         }
 
         public IActionResult MultipleChoiceView()
