@@ -10,8 +10,6 @@ namespace WebDevProject.Models
     {
         public int Id { get; set; }
         public int TopicId { get; set; }
-        public virtual Module Module { get; set; }
-        public ICollection<Question> questionList { get; set; }
         public bool isMultipleChoice { get; set; }
         public string questionString { get; set; }
         public string multipleChoice1 { get; set; }
