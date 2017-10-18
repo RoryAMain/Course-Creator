@@ -92,9 +92,15 @@ namespace WebDevProject.Controllers
             return View(model);
         }
 
-        public IActionResult MultipleChoiceView()
+        public IActionResult MultipleChoiceView(int Id)
         {
-            return View();
+            MultipleChoiceViewModel model = new MultipleChoiceViewModel();
+
+            Question question = _context.Question.SingleOrDefault(quest => quest.Id == Id);
+
+            model.theQuestion = question;
+
+            return View(model);
         }
     }
 }
