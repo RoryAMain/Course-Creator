@@ -1,0 +1,71 @@
+﻿<html lang="en">
+<head>
+    <title>CodeMirror in Action</title>
+
+    <script src="js/vendor/jquery-1.9.1.js"></script>
+
+    <!-- More examples at http://codemirror.net/demo/ -->
+    <!-- add basic CodeMirror functionality -->
+    <script src="~/lib/CodeMirror/lib/codemirror.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/lib/CodeMirror/addon/selection/active-line.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="~/lib/CodeMirror/lib/codemirror.css" />
+
+    <!-- add python-mode dependencies -->
+    <script src="~/lib/CodeMirror/mode/python/python.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+    <div class="container mainBody">
+        <div class="row">
+            
+            <div class="jumbotron col-12">
+        
+                <h3>The question.</h3>
+                <br />
+                <div id="editor1-pane">
+                    <div id="editor1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-success compileButton" style="float:left">Compile</button>
+                        <button type="button" class="btn btn-success submitButton">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="jumbotron col-12">
+                <h3>Output:</h3>
+                <br />
+                <div id="editor-2 pane">
+                    <div id="editor2"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+$(document).ready(function () {
+    window.codemirror1 = CodeMirror($('#editor1').get(0), {
+        value: "Example python",
+        mode:  "python",
+        readOnly: false,
+        styleActiveLine: true,
+        lineNumbers: true,
+   });
+
+    window.codemirror2 = CodeMirror($('#editor2').get(0), {
+        value: "Output",
+        mode: "python",
+        readOnly: true,
+        styleActiveLine: true,
+        lineNumbers: true,
+    });
+
+});
+    </script>
+
+</body>
+</html>

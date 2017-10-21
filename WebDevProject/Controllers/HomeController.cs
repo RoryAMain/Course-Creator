@@ -102,5 +102,10 @@ namespace WebDevProject.Controllers
 
             return View(model);
         }
+
+        public IActionResult CodeQuestionView(int Id)
+        {
+            return View();
+        }
     }
 }
