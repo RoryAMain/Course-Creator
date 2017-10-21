@@ -1,4 +1,5 @@
-﻿<html lang="en">
+﻿@model WebDevProject.Models.CodeQuestionViewModel
+<html lang="en">
 <head>
     <title>CodeMirror in Action</title>
 
@@ -20,7 +21,7 @@
             
             <div class="jumbotron col-12">
         
-                <h3>The question.</h3>
+                <h3>@Html.DisplayFor(model => model.theQuestion.questionString)</h3>
                 <br />
                 <div id="editor1-pane">
                     <div id="editor1"></div>
@@ -47,9 +48,12 @@
     </div>
 
     <script type="text/javascript">
+
+@{ var suppliedCode = Html.DisplayFor(model => model.theQuestion.suppliedCode);}
+
 $(document).ready(function () {
     window.codemirror1 = CodeMirror($('#editor1').get(0), {
-        value: "Example python",
+        value: "@suppliedCode",
         mode:  "python",
         readOnly: false,
         styleActiveLine: true,

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="ViewModels\CodeQuestionViewModel.cs" />
     <None Include="ViewModels\IndexViewModel.cs" />
     <None Include="wwwroot\css\HomePageStyleSheet.css" />
     <None Include="wwwroot\js\HomeTestScript.js" />

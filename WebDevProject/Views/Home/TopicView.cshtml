@@ -11,7 +11,14 @@
                 <ul>
                     @foreach (var item in Model.Questions)
                     {
+                        @if (item.isMultipleChoice)
+                        {
                         <li><a href="/Home/MultipleChoiceView/@item.Id">@item.Id</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="/Home/CodeQuestionView/@item.Id">@item.Id</a></li>
+                        }
                     }
                 </ul>
             </div>
