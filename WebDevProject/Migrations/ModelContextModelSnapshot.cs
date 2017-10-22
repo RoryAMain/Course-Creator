@@ -43,7 +43,7 @@ namespace WebDevProject.Migrations
 
                     b.Property<string>("correctCodeAnswer");
 
-                    b.Property<int>("correctMultipleChoice");
+                    b.Property<int?>("correctMultipleChoice");
 
                     b.Property<bool>("isMultipleChoice");
 
@@ -58,6 +58,8 @@ namespace WebDevProject.Migrations
                     b.Property<string>("multipleChoice4");
 
                     b.Property<string>("questionString");
+
+                    b.Property<string>("suppliedCode");
 
                     b.HasKey("Id");
 

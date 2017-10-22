@@ -81,9 +81,10 @@ namespace WebDevProject.Controllers
             if (questionInfo != null)
             {
                 model.Questions = (from q in questionInfo
-                                select new Question()
-                                {
-                                    Id = q.Id
+                                   select new Question()
+                                   {
+                                       Id = q.Id,
+                                       isMultipleChoice = q.isMultipleChoice
                                 }).ToList();
             }
 
@@ -100,6 +101,16 @@ namespace WebDevProject.Controllers
 
             model.theQuestion = question;
 
+            return View(model);
+        }
+
+        public IActionResult CodeQuestionView(int Id)
+        {
+            CodeQuestionViewModel model = new CodeQuestionViewModel();
+
+            Question question = _context.Question.SingleOrDefault(quest => quest.Id == Id);
+
+            model.theQuestion = question;
             return View(model);
         }
     }
