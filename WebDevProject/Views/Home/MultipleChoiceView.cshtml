@@ -1,12 +1,27 @@
 ﻿@model WebDevProject.Models.MultipleChoiceViewModel
 <div class="container mainBody">
     <div class="row">
-        <div class="col-6 scrollable-menu questionPane">
+        <div class="col-4 scrollable-menu questionPane">
             <div class="jumbotron">
                 <p>@Html.DisplayFor(model => model.theQuestion.lectureText)</p>
             </div>
+            <div class="jumbotron">
+                <ul>
+                    @foreach (var item in Model.questionList)
+                    {
+                        @if (item.isMultipleChoice)
+                        {
+                            <li><a href="/Home/MultipleChoiceView/@item.Id/@item.TopicId">Question @item.Id</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="/Home/CodeQuestionView/@item.Id/@item.TopicId">Question @item.Id</a></li>
+                        }
+                    }
+                </ul>
+            </div>
         </div>
-        <div class="col-6 jumbotron multChoicePane">
+        <div class="col-8 jumbotron multChoicePane">
             <h3>@Html.DisplayFor(model => model.theQuestion.questionString)</h3>
             <div class="radio">
                 <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice1)</label>
@@ -21,6 +36,46 @@
                 <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice4)</label>
             </div>
             <button type="button" class="btn btn-success submitButton">Submit</button>
+            @{ bool isEndOfList = false;}
+            @if (Model.theQuestion.questionOrder < Model.orderListLength)
+            {
+                isEndOfList = false;
+                <button type="button" class="btn btn-success" id="nextButton">Next</button>
+            }
+            else
+            {
+                isEndOfList = true;
+                <button type="button" class="btn btn-success" id= "finishButton">Finish</button>
+            }
         </div>
     </div>
 </div>
+
+@{ string nextURL = "";}
+@{
+    if (!isEndOfList)
+    {
+        if (Model.questionList[Model.theQuestion.questionOrder + 1].isMultipleChoice)
+        {
+            nextURL = "/Home/MultipleChoiceView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+        }
+        else
+        {
+            nextURL = "/Home/CodeQuestionView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+        }
+    }
+}
+@{ string finishURL = "/Home/TopicView/" + Model.theQuestion.TopicId;}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+            $("#finishButton").click(function () {
+                window.location.href = "@finishURL";
+            });
+
+            $("#nextButton").click(function () {
+                window.location.href = "@nextURL";
+            });
+        });
+</script>

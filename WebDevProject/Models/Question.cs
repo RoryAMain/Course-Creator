@@ -20,5 +20,6 @@ namespace WebDevProject.Models
         public string correctCodeAnswer { get; set; }
         public string lectureText { get; set; }
         public string suppliedCode { get; set; }
+        public int questionOrder { get; set; }
     }
 }

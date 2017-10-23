@@ -18,8 +18,27 @@
 <body>
     <div class="container mainBody">
         <div class="row">
-            
-            <div class="jumbotron col-12">
+            <div class="col-4 scrollable-menu questionPane">
+                <div class="jumbotron">
+                    <p>@Html.DisplayFor(model => model.theQuestion.lectureText)</p>
+                </div>
+                <div class="jumbotron">
+                    <ul>
+                        @foreach (var item in Model.questionList)
+                        {
+                            @if (item.isMultipleChoice)
+                            {
+                                <li><a href="/Home/MultipleChoiceView/@item.Id/@item.TopicId">Question @item.Id</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="/Home/CodeQuestionView/@item.Id/@item.TopicId">Question @item.Id</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="jumbotron col-8">
         
                 <h3>@Html.DisplayFor(model => model.theQuestion.questionString)</h3>
                 <br />
@@ -30,46 +49,72 @@
                     <div class="col-6">
                         <button type="button" class="btn btn-success compileButton" style="float:left">Compile</button>
                         <button type="button" class="btn btn-success submitButton">Submit</button>
+                        @{ bool isEndOfList = false;}
+                        @if (Model.theQuestion.questionOrder < Model.orderListLength)
+                        {
+                             isEndOfList = false;
+                            <button type="button" class="btn btn-success" id="nextButton">Next</button>
+                        }
+                        else
+                        {
+                            isEndOfList = true;
+                            <button type="button" class="btn btn-success" id="finishButton">Finish</button>
+                        }
+                    </div>
+                </div>
+                <div class="jumbotron">
+                    <h3>Output:</h3>
+                    <br />
+                    <div id="editor-2 pane">
+                        <div id="editor2"></div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="jumbotron col-12">
-                <h3>Output:</h3>
-                <br />
-                <div id="editor-2 pane">
-                    <div id="editor2"></div>
-                </div>
-            </div>
-        </div>
-
     </div>
+   @{ string nextURL = "";}
+@{
+    if (!isEndOfList)
+    {
+        if (Model.questionList[Model.theQuestion.questionOrder + 1].isMultipleChoice)
+        {
+            nextURL = "/Home/MultipleChoiceView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+        }
+        else
+        {
+            nextURL = "/Home/CodeQuestionView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+        }
+    }
+}
+    @{ string finishURL = "/Home/TopicView/" + Model.theQuestion.TopicId;}
+    @{ var suppliedCode = Html.DisplayFor(model => model.theQuestion.suppliedCode);}
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            window.codemirror1 = CodeMirror($('#editor1').get(0), {
+                value: "@suppliedCode",
+                mode:  "python",
+                readOnly: false,
+                styleActiveLine: true,
+                lineNumbers: true,
+           });
 
-@{ var suppliedCode = Html.DisplayFor(model => model.theQuestion.suppliedCode);}
+            window.codemirror2 = CodeMirror($('#editor2').get(0), {
+                value: "Output",
+                mode: "python",
+                readOnly: true,
+                styleActiveLine: true,
+                lineNumbers: true,
+                });
 
-$(document).ready(function () {
-    window.codemirror1 = CodeMirror($('#editor1').get(0), {
-        value: "@suppliedCode",
-        mode:  "python",
-        readOnly: false,
-        styleActiveLine: true,
-        lineNumbers: true,
-   });
+            $("#finishButton").click(function () {
+                window.location.href = "@finishURL";
+            });
 
-    window.codemirror2 = CodeMirror($('#editor2').get(0), {
-        value: "Output",
-        mode: "python",
-        readOnly: true,
-        styleActiveLine: true,
-        lineNumbers: true,
-    });
-
-});
+            $("#nextButton").click(function () {
+                window.location.href = "@nextURL";
+            });
+        });
     </script>
-
 </body>
 </html>
