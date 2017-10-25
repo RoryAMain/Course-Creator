@@ -9,5 +9,7 @@ namespace WebDevProject.Models
     public class CodeQuestionViewModel
     {
         public Question theQuestion { get; set; }
+        public List<Question> questionList { get; set; }
+        public int orderListLength { get; set; }
     }
 }

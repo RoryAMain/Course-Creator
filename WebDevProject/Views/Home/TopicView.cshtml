@@ -9,15 +9,16 @@
             <div>
                 <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
                 <ul>
+                    @{ var topicId = Html.DisplayFor(model => model.theTopic.Id);}
                     @foreach (var item in Model.Questions)
                     {
                         @if (item.isMultipleChoice)
                         {
-                        <li><a href="/Home/MultipleChoiceView/@item.Id">@item.Id</a></li>
+                        <li><a href="/Home/MultipleChoiceView/@item.Id/@topicId">Question @item.questionOrder</a></li>
                         }
                         else
                         {
-                            <li><a href="/Home/CodeQuestionView/@item.Id">@item.Id</a></li>
+                            <li><a href="/Home/CodeQuestionView/@item.Id/@topicId">Question @item.questionOrder</a></li>
                         }
                     }
                 </ul>

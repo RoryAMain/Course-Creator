@@ -84,7 +84,8 @@ namespace WebDevProject.Controllers
                                    select new Question()
                                    {
                                        Id = q.Id,
-                                       isMultipleChoice = q.isMultipleChoice
+                                       isMultipleChoice = q.isMultipleChoice,
+                                       questionOrder = q.questionOrder
                                 }).ToList();
             }
 
@@ -93,7 +94,7 @@ namespace WebDevProject.Controllers
             return View(model);
         }
 
-        public IActionResult MultipleChoiceView(int Id)
+        public IActionResult MultipleChoiceView(int Id, int topicId)
         {
             MultipleChoiceViewModel model = new MultipleChoiceViewModel();
 
@@ -101,16 +102,55 @@ namespace WebDevProject.Controllers
 
             model.theQuestion = question;
 
+            var questionInfo = from q in _context.Question
+                               where q.TopicId == topicId
+                               select q;
+
+            var orderListLength = questionInfo.Count();
+            model.orderListLength = orderListLength-1;
+            
+            if (questionInfo != null)
+            {
+                model.questionList = (from q in questionInfo
+                                   select new Question()
+                                   {
+                                       Id = q.Id,
+                                       isMultipleChoice = q.isMultipleChoice,
+                                       TopicId = q.TopicId,
+                                       questionOrder = q.questionOrder
+                                   }).ToList();
+            }
+
             return View(model);
         }
 
-        public IActionResult CodeQuestionView(int Id)
+        public IActionResult CodeQuestionView(int Id, int topicId)
         {
             CodeQuestionViewModel model = new CodeQuestionViewModel();
 
             Question question = _context.Question.SingleOrDefault(quest => quest.Id == Id);
 
             model.theQuestion = question;
+
+            var questionInfo = from q in _context.Question
+                               where q.TopicId == topicId
+                               select q;
+
+            var orderListLength = questionInfo.Count();
+            model.orderListLength = orderListLength-1;
+
+            if (questionInfo != null)
+            {
+                model.questionList = (from q in questionInfo
+                                      select new Question()
+                                      {
+                                          Id = q.Id,
+                                          isMultipleChoice = q.isMultipleChoice,
+                                          TopicId = q.TopicId,
+                                          questionOrder = q.questionOrder
+                                      }).ToList();
+            }
+
             return View(model);
         }
     }
