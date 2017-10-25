@@ -39,17 +39,15 @@ namespace WebDevProject.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ModuleId");
-
-                    b.Property<int?>("QuestionId");
-
                     b.Property<int>("TopicId");
 
                     b.Property<string>("correctCodeAnswer");
 
-                    b.Property<int>("correctMultipleChoice");
+                    b.Property<int?>("correctMultipleChoice");
 
                     b.Property<bool>("isMultipleChoice");
+
+                    b.Property<string>("lectureText");
 
                     b.Property<string>("multipleChoice1");
 
@@ -59,15 +57,13 @@ namespace WebDevProject.Migrations
 
                     b.Property<string>("multipleChoice4");
 
+                    b.Property<int>("questionOrder");
+
                     b.Property<string>("questionString");
 
+                    b.Property<string>("suppliedCode");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("ModuleId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("TopicId");
 
                     b.ToTable("Question");
                 });
@@ -89,33 +85,7 @@ namespace WebDevProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModuleId");
-
                     b.ToTable("Topic");
-                });
-
-            modelBuilder.Entity("WebDevProject.Models.Question", b =>
-                {
-                    b.HasOne("WebDevProject.Models.Module", "Module")
-                        .WithMany()
-                        .HasForeignKey("ModuleId");
-
-                    b.HasOne("WebDevProject.Models.Question")
-                        .WithMany("questionList")
-                        .HasForeignKey("QuestionId");
-
-                    b.HasOne("WebDevProject.Models.Topic")
-                        .WithMany("questionList")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebDevProject.Models.Topic", b =>
-                {
-                    b.HasOne("WebDevProject.Models.Module", "Module")
-                        .WithMany("topicList")
-                        .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }
