@@ -22,6 +22,7 @@ namespace WebDevProject.Models
         public DbSet<Module> Module { get; set; }
         public DbSet<Topic> Topic { get; set; }
         public DbSet<Question> Question { get; set; }
+        public DbSet<Student> Student { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
