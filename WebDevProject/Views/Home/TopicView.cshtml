@@ -1,40 +1,8 @@
-﻿<div class="container-fluid mainBody">
+﻿@model WebDevProject.Models.TopicViewModel
+<!-- This container div holds the whole page. -->
+<div class="container-fluid mainBody">
 
-    <!-- This is the header stuff.-->
 
-    <div class="row">
-
-        <!-- Left section of the header.  Contains student's picture, name, and logout button.  Uses 2 of 12 of the grid spaces. -->
-
-        <div class="topPane col-2" style="padding-left: 10px;">
-            <img src="https://i.imgur.com/VZYACsw.png" width="30px" style="float: left; padding-top: 5px;" />
-            <div id="username" class="text-left" style="padding-left: 40px;">Example Student</div>
-            <div class="logout" style="padding-left: 40px; padding-bottom: 10px;"><a href="#logout" style=" color: white">Logout</a></div>
-        </div>
-
-        <!-- Center section of the header.  Contains progress bar and the resume button. Uses 8 of the 12 grid spaces. -->
-
-        <div class="topPane col-8">
-
-            <!-- PROGRESS BAR NOT YET INTEGRATED -->
-            <!-- <div class="progress" style="width: 50%;">
-                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
-                     aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                    70%
-                </div>
-            </div> -->
-
-            <button class="btn" style="float: right">RESUME</button>
-
-        </div>
-
-        <!-- Right section of the header.  Contains UAA logo/button to return to the home site. Uses 2 of the 12 grid spaces. -->
-
-        <div class="topPane col-2" style="padding-left: 55px; padding-top: 3px;">
-            <a href="Home/Index"><img src="https://i.imgur.com/jdEsxjf.png" width="150px" /></a>
-        </div>
-
-    </div>
 
     <!-- Main display area. -->
 
@@ -44,48 +12,85 @@
 
         <div class="col-3 scrollable-menu leftPane listPane">
             <div>
+                <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
                 <ul>
-                    <!-- This first button is to test the expansion capability.  Still messing with bootstrap stuff on that. -->
-                    <li><a href="MultipleChoiceView"><button class="btn-block text-left">Question 1</button></a></li>
-                    <li><button class="btn-block text-left">Question 2</button></li>
+                    @{ var topicId = Html.DisplayFor(model => model.theTopic.Id);}
+                    @foreach (var item in Model.Questions)
+                    {
+                        @if (item.isMultipleChoice)
+                        {
+                            <li>
+                                <a href="/Home/MultipleChoiceView/@item.Id/@topicId"><button class="text-left col-md-10">Question @item.questionOrder</button></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="/Home/CodeQuestionView/@item.Id/@topicId"><button class="text-left col-md-10">Question @item.questionOrder</button></a>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
+
         </div>
 
-        <!-- This is where the teacher's content will be displayed. -->
-
+        <!-- The rightPane holds all instructor material. Later it can also be covered up by expanding lists, which I haven't made. col-8 defines it as 8 pandels wide in bootstrap, scrollable-menu let's CSS apply scrolling to it, and rightPane allows CSS to customize it specifically. -->
         <div class="col-9 scrollable-menu rightPane" style="padding-top: 20px">
-            <!-- Module stuff -->
 
-            <h1>TOPIC PAGE</h1>
-            <center>
-                <h2>This is what a topic page will look like.</h2>
-                <h3>Testing even further.</h3>
-            </center>
-            <h4 align="right">It goes on and on.</h4>
-            <br />
+            <h1>@Html.DisplayFor(model => model.theTopic.topicTitle)</h1>
 
-            <center>
-                <!-- We can put a teacher supplied Youtube link here to display it. -->
-                <div class="YoutubeVideo">
-                    <iframe src="https://www.youtube.com/embed/SzJ46YA_RaA" frameborder="0" allowfullscreen></iframe>
-                </div>
-            </center>
+            <!-- Video stuff. -->
+            @{ string youtubeURL = Model.theTopic.videoURL;}
+            @{ string MP4Link = Model.theTopic.MP4Link;}
 
-            <br />
-            <p>Wall of text. Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.Wall of text.</p>
-            <br />
+            <div class="row" style="padding-left: 20px">
+                @if (youtubeURL != "" && youtubeURL != "NULL" && youtubeURL != null)
+                {
+                    if (MP4Link != "" && MP4Link != "NULL" && MP4Link != null)
+                    {
+                        <div class="col-xs-6 YoutubeVideo smallVid">
+                            <iframe src="@youtubeURL" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="col-xs-6 UploadVideo smallVid">
+                            <video controls>
+                                <source src="~/mp4/@MP4Link" type="video/mp4">
+                                <!--<source src="Video.ogg" type="video/ogg">-->
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-12 YoutubeVideo wideVid">
+                            <iframe src="@youtubeURL" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    }
+                }
+                else
+                {
+                    if (MP4Link != "" && MP4Link != "NULL" && MP4Link != null)
+                    {
+                        <div class="col-xs-12 UploadVideo wideVid">
+                            <video controls>
+                                <source src="~/mp4/@MP4Link" type="video/mp4">
+                                <!--<source src="Video.ogg" type="video/ogg">-->
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    }
+                }
+            </div>
 
-            <a href="MultipleChoiceView"><h1>Proceed to the first question!</h1></a>
+            <!-- This place can be filled with teacher supplied text. We should probably still sanitize this input somehow. -->
+
+                
+                <p>@Html.DisplayFor(model => model.theTopic.lectureText)</p>
+
+            
+
+
+
         </div>
-
     </div>
-
 </div>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-<script src="~/js/HomeTestScript.js" type="text/javascript"></script>

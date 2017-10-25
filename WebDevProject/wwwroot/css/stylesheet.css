@@ -5,16 +5,16 @@ body, html {
 }
 
 .mainBody{
-    color: black;
+
 }
 
 /*Header*/
-.topPane {
+.topPane{
     /*background-color: #00583D;*/
     background: linear-gradient(#00583D 30%, black);
-    height: 5.5vh;
+    height:5.5vh;
     padding: 0;
-    color: #000000;
+    color: white;
 }
 
 .logout {
@@ -22,11 +22,11 @@ body, html {
 }
 
 /*Left area for lesson list*/
-.leftPane {
+.leftPane{
     background-color: lightgray;
-    overflow: hidden;
+    overflow:hidden;
     height: 100vh;
-    color: #000000;
+    min-height: 100vh;
 }
 
 .leftPane ul{
@@ -38,7 +38,26 @@ body, html {
 .rightPane{
     background-color: white;
     overflow:hidden;
-    /*text-align:center;*/
+}
+
+.listPane ul {
+    list-style-type: none
+}
+
+.expandableMiddlePane {
+    overflow: hidden;
+    border: solid;
+    border-color: lightslategray;
+    display: none;
+    background-color: lightgray;
+}
+
+.expandableRightPane {
+    overflow: hidden;
+    border: solid;
+    border-color: lightslategray;
+    display: none;
+    background-color: lightgray;
 }
 
 /*Any element with this class is scrollable, and has a height limited to the screen height-the header height.*/
@@ -100,4 +119,15 @@ body, html {
      padding-left: 0;  /*idem*/
      margin-right: auto;
      margin-left: auto;
+}
+
+.multChoicePane {
+    text-align: left;
+}
+
+pre code {
+  background-color: #eee;
+  border: 1px solid #999;
+  display: block;
+  padding: 20px;
 }

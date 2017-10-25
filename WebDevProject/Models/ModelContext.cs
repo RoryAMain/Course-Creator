@@ -18,7 +18,10 @@ namespace WebDevProject.Models
             _config = config;
         }
 
-        public DbSet<TestModel> testModels { get; set; }
+        public DbSet<Index> Index { get; set; }
+        public DbSet<Module> Module { get; set; }
+        public DbSet<Topic> Topic { get; set; }
+        public DbSet<Question> Question { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
