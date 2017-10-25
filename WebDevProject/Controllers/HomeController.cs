@@ -31,6 +31,10 @@ namespace WebDevProject.Controllers
 
             IndexViewModel model = new IndexViewModel();
 
+            Index index = _context.Index.SingleOrDefault();
+
+            model.theIndex = index;
+
             if(moduleInfo != null)
             {
                 model.Modules = (from module in moduleInfo

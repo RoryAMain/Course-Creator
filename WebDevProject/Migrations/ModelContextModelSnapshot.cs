@@ -16,10 +16,30 @@ namespace WebDevProject.Migrations
                 .HasAnnotation("ProductVersion", "1.1.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("WebDevProject.Models.Index", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MP4Link");
+
+                    b.Property<string>("indexTitle");
+
+                    b.Property<string>("lectureText");
+
+                    b.Property<string>("youtubeURL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Index");
+                });
+
             modelBuilder.Entity("WebDevProject.Models.Module", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MP4Link");
 
                     b.Property<string>("lectureText");
 
@@ -38,6 +58,8 @@ namespace WebDevProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MP4Link");
 
                     b.Property<int>("TopicId");
 
@@ -63,6 +85,8 @@ namespace WebDevProject.Migrations
 
                     b.Property<string>("suppliedCode");
 
+                    b.Property<string>("youtubeURL");
+
                     b.HasKey("Id");
 
                     b.ToTable("Question");
@@ -72,6 +96,8 @@ namespace WebDevProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MP4Link");
 
                     b.Property<int>("ModuleId");
 

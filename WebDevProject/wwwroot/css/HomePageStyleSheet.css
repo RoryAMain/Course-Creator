@@ -60,14 +60,16 @@
 }
 
 .YoutubeVideo iframe {
-    width: 420px;
-    height: 315px;
-    margin: auto;
+    display:block;
+    width:100%;
+    height:100%;
+    margin:auto;
 }
 
 .UploadVideo video {
-    width: 420px;
-    height: 315px;
+    display:block;
+    width: 100%;
+    height: 100%;
     margin: auto;
 }
 

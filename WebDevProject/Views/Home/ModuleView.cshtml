@@ -26,19 +26,49 @@
                 <h1>@Html.DisplayFor(model => model.theModule.moduleTitle)</h1>
                 <p>@Html.DisplayFor(model => model.theModule.lectureText)</p>
             </div>
-            <!-- We can put a teacher supplied Youtube link here to display it. -->
-            <div class="YoutubeVideo">
-                <iframe src="@Html.DisplayFor(model => model.theModule.videoURL)" frameborder="0" allowfullscreen></iframe>
+            @{ string youtubeURL = Model.theModule.videoURL;}
+            @{ string MP4Link = Model.theModule.MP4Link;}
+
+            <div class="row">
+                @if (youtubeURL != "" && youtubeURL != "NULL" && youtubeURL != null)
+                {
+                    if (MP4Link != "" && MP4Link != "NULL" && MP4Link != null)
+                    {
+                        <div class="col-xs-6 YoutubeVideo smallVid">
+                            <iframe src="@youtubeURL" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                            <div class="col-xs-6 UploadVideo smallVid">
+                                <video controls>
+                                    <source src="~/mp4/@MP4Link" type="video/mp4">
+                                    <!--<source src="Video.ogg" type="video/ogg">-->
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-12 YoutubeVideo wideVid">
+                            <iframe src="@youtubeURL" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    }
+                }
+                else
+                {
+                    if (MP4Link != "" && MP4Link != "NULL" && MP4Link != null)
+                    {
+                        <div class="col-xs-12 UploadVideo wideVid">
+                            <video controls>
+                                <source src="~/mp4/@MP4Link" type="video/mp4">
+                                <!--<source src="Video.ogg" type="video/ogg">-->
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    }
+                }
             </div>
 
-            <!-- We can put a teacher supplied mp4/ogg file here to display it, currently it must be name "Video.mp4" or "Video.ogg -->
-            <div class="UploadVideo">
-                <video controls>
-                    <source src="Video.mp4" type="video/mp4">
-                    <source src="Video.ogg" type="video/ogg">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
+
+
         </div>
     </div>
 </div>

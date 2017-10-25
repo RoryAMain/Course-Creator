@@ -21,5 +21,7 @@ namespace WebDevProject.Models
         public string lectureText { get; set; }
         public string suppliedCode { get; set; }
         public int questionOrder { get; set; }
+        public string MP4Link { get; set; }
+        public string youtubeURL { get; set; }
     }
 }

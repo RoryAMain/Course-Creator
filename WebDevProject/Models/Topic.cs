@@ -12,6 +12,7 @@ namespace WebDevProject.Models
         public int ModuleId { get; set; }
         public string topicTitle { get; set; }
         public string videoURL { get; set; }
+        public string MP4Link { get; set; }
         public string lectureText { get; set; }
         public int topicOrder { get; set; }
     }
