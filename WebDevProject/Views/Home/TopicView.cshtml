@@ -14,11 +14,11 @@
                     {
                         @if (item.isMultipleChoice)
                         {
-                        <li><a href="/Home/MultipleChoiceView/@item.Id/@topicId">Question @item.Id</a></li>
+                        <li><a href="/Home/MultipleChoiceView/@item.Id/@topicId">Question @item.questionOrder</a></li>
                         }
                         else
                         {
-                            <li><a href="/Home/CodeQuestionView/@item.Id/@topicId">Question @item.Id</a></li>
+                            <li><a href="/Home/CodeQuestionView/@item.Id/@topicId">Question @item.questionOrder</a></li>
                         }
                     }
                 </ul>

@@ -84,7 +84,8 @@ namespace WebDevProject.Controllers
                                    select new Question()
                                    {
                                        Id = q.Id,
-                                       isMultipleChoice = q.isMultipleChoice
+                                       isMultipleChoice = q.isMultipleChoice,
+                                       questionOrder = q.questionOrder
                                 }).ToList();
             }
 
@@ -115,7 +116,8 @@ namespace WebDevProject.Controllers
                                    {
                                        Id = q.Id,
                                        isMultipleChoice = q.isMultipleChoice,
-                                       TopicId = q.TopicId
+                                       TopicId = q.TopicId,
+                                       questionOrder = q.questionOrder
                                    }).ToList();
             }
 
@@ -144,7 +146,8 @@ namespace WebDevProject.Controllers
                                       {
                                           Id = q.Id,
                                           isMultipleChoice = q.isMultipleChoice,
-                                          TopicId = q.TopicId
+                                          TopicId = q.TopicId,
+                                          questionOrder = q.questionOrder
                                       }).ToList();
             }
 
