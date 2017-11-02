@@ -20,6 +20,12 @@
     border-color: lightslategray;
 }
 
+.referencePane {
+    overflow: hidden;
+    border: solid;
+    border-color: lightslategray;
+}
+
 .expandableMiddlePane {
     overflow: hidden;
     border: solid;

@@ -1,7 +1,7 @@
 ﻿@model WebDevProject.Models.MultipleChoiceViewModel
 <div class="container mainBody">
     <div class="row">
-        <div class="col-4 scrollable-menu questionPane">
+        <div class="col-2 scrollable-menu questionPane">
             @if (Model.theQuestion.lectureText != "")
             {
                 <div class="jumbotron">
@@ -50,6 +50,15 @@
                 isEndOfList = true;
                 <button type="button" class="btn btn-success" id= "finishButton">Finish</button>
             }
+        </div>
+        <div class="col-2 listPane scrollable-menu referencePane">
+            <div>
+                <ul>
+                    <li>Test text</li>
+                    <li>Test text</li>
+                    <li>Test test</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
