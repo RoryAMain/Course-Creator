@@ -157,5 +157,10 @@ namespace WebDevProject.Controllers
 
             return View(model);
         }
+
+        public IActionResult TextEditTestView()
+        {
+            return View();
+        }
     }
 }
