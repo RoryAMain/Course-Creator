@@ -32,8 +32,10 @@ namespace WebDevProject.Controllers
             IndexViewModel model = new IndexViewModel();
 
             Index index = _context.Index.SingleOrDefault();
+            Student student = _context.Student.SingleOrDefault();
 
             model.theIndex = index;
+            model.student = student;
 
             if(moduleInfo != null)
             {

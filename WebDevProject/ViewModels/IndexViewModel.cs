@@ -10,5 +10,6 @@ namespace WebDevProject.Models
     {
         public IList<Module> Modules { get; set; }
         public Index theIndex { get; set; }
+        public Student student { get; set; }
     }
 }
