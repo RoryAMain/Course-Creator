@@ -6,10 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebDevProject.Models
 {
-    public class IndexViewModel
+    public class IndexViewModel : BaseViewModel
     {
         public IList<Module> Modules { get; set; }
         public Index theIndex { get; set; }
-        public Student student { get; set; }
     }
 }

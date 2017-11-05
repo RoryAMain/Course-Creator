@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebDevProject.Models
 {
-    public class CodeQuestionViewModel
+    public class CodeQuestionViewModel : BaseViewModel
     {
         public Question theQuestion { get; set; }
         public List<Question> questionList { get; set; }

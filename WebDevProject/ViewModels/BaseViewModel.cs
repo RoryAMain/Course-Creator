@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace WebDevProject.Models
 {
-    public class ModuleViewModel : BaseViewModel
+    public class BaseViewModel
     {
-        public IList<Topic> Topics { get; set; }
-        public Module theModule { get; set; }
+        public Student student { get; set; }
     }
 }

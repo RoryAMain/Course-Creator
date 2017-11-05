@@ -58,6 +58,7 @@ namespace WebDevProject.Controllers
             ModuleViewModel model = new ModuleViewModel();
 
             Module module = _context.Module.SingleOrDefault(mod => mod.Id == Id);
+            Student student = _context.Student.SingleOrDefault();
 
             if (topicInfo != null)
             {
@@ -70,6 +71,7 @@ namespace WebDevProject.Controllers
             }
 
             model.theModule = module;
+            model.student = student;
 
             return View(model);
         }
@@ -83,6 +85,7 @@ namespace WebDevProject.Controllers
             TopicViewModel model = new TopicViewModel();
 
             Topic topic = _context.Topic.SingleOrDefault(top => top.Id == Id);
+            Student student = _context.Student.SingleOrDefault();
 
             if (questionInfo != null)
             {
@@ -96,6 +99,7 @@ namespace WebDevProject.Controllers
             }
 
             model.theTopic = topic;
+            model.student = student;
 
             return View(model);
         }
@@ -105,8 +109,10 @@ namespace WebDevProject.Controllers
             MultipleChoiceViewModel model = new MultipleChoiceViewModel();
 
             Question question = _context.Question.SingleOrDefault(quest => quest.Id == Id);
+            Student student = _context.Student.SingleOrDefault();
 
             model.theQuestion = question;
+            model.student = student;
 
             var questionInfo = from q in _context.Question
                                where q.TopicId == topicId
@@ -135,8 +141,10 @@ namespace WebDevProject.Controllers
             CodeQuestionViewModel model = new CodeQuestionViewModel();
 
             Question question = _context.Question.SingleOrDefault(quest => quest.Id == Id);
+            Student student = _context.Student.SingleOrDefault();
 
             model.theQuestion = question;
+            model.student = student;
 
             var questionInfo = from q in _context.Question
                                where q.TopicId == topicId

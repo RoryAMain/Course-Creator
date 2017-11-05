@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebDevProject.Models
 {
-    public class TopicViewModel
+    public class TopicViewModel : BaseViewModel
     {
         public IList<Question> Questions { get; set; }
         public Topic theTopic { get; set; }
