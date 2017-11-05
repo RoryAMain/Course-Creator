@@ -12,6 +12,7 @@ namespace WebDevProject.Models
         public double Progress { get; set; }
         public int modulesCompleted { get; set; }
         public int topicsCompleted { get; set; }
-        public int questionsCompleted { get; set; }
+        public double questionsCompleted { get; set; }
+        public double numberOfQuestions { get; set; }
     }
 }

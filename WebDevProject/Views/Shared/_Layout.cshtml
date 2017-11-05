@@ -36,12 +36,12 @@
         <div class="topPane col-8">
 
             <!-- PROGRESS BAR NOT YET INTEGRATED -->
-            <!-- <div class="progress" style="width: 50%;">
-                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
-                     aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                    70%
+            <div class="progress" style="width: 50%">
+                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                     aria-valuemin="0" aria-valuemax="100" style="width:@(Model.student.questionsCompleted / Model.student.numberOfQuestions * 100)%">
+                    @(Model.student.questionsCompleted / Model.student.numberOfQuestions * 100)%
                 </div>
-            </div> -->
+            </div>
 
             <button class="btn" style="float: right">RESUME</button>
 

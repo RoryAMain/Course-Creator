@@ -8,9 +8,10 @@ using WebDevProject.Models;
 namespace WebDevProject.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    partial class ModelContextModelSnapshot : ModelSnapshot
+    [Migration("20171105200344_Student_v2")]
+    partial class Student_v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.3")
@@ -103,9 +104,9 @@ namespace WebDevProject.Migrations
 
                     b.Property<int>("modulesCompleted");
 
-                    b.Property<double>("numberOfQuestions");
+                    b.Property<int>("numberOfQuestions");
 
-                    b.Property<double>("questionsCompleted");
+                    b.Property<int>("questionsCompleted");
 
                     b.Property<int>("topicsCompleted");
 
