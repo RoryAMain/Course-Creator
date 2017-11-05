@@ -10,5 +10,7 @@ namespace WebDevProject.Models
     {
         public IList<Question> Questions { get; set; }
         public Topic theTopic { get; set; }
+        public IList<TopicReferenceList> referenceList { get; set; }
+
     }
 }

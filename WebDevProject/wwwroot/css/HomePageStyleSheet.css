@@ -18,12 +18,14 @@
     overflow: hidden;
     border: solid;
     border-color: lightslategray;
+    text-align:left;
 }
 
 .referencePane {
     overflow: hidden;
     border: solid;
     border-color: lightslategray;
+    text-align:left;
 }
 
 .expandableMiddlePane {
@@ -38,10 +40,6 @@
     border: solid;
     border-color: lightslategray;
     display: none;
-}
-
-.listPane ul {
-    list-style-type: none
 }
 
 /*Right area for home page text/videos/images*/

@@ -8,20 +8,20 @@
         <div class="col-2 scrollable-menu leftPane listPane">
             <div>
                 <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
-                <ul>
-                    @{ var topicId = Html.DisplayFor(model => model.theTopic.Id);}
-                    @foreach (var item in Model.Questions)
+                @{ var topicId = Html.DisplayFor(model => model.theTopic.Id);}
+                @foreach (var item in Model.Questions)
+                {
+                    @if (item.isMultipleChoice)
                     {
-                        @if (item.isMultipleChoice)
-                        {
-                        <li><a href="/Home/MultipleChoiceView/@item.Id/@topicId">Question @item.questionOrder</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="/Home/CodeQuestionView/@item.Id/@topicId">Question @item.questionOrder</a></li>
-                        }
+                        <a href="/Home/MultipleChoiceView/@item.Id/@topicId">Question @item.questionOrder</a>
+                        <br/>
                     }
-                </ul>
+                    else
+                    {
+                        <a href="/Home/CodeQuestionView/@item.Id/@topicId">Question @item.questionOrder</a>
+                        <br/>
+                    }
+                }
             </div>
 
         </div>
@@ -78,11 +78,11 @@
         </div>
         <div class="col-2 listPane scrollable-menu referencePane">
             <div>
-                <ul>
-                    <li>Test text</li>
-                    <li>Test text</li>
-                    <li>Test test</li>
-                </ul>
+                @foreach (var item in Model.referenceList)
+                {
+                    <a href="@item.Link">@item.Text</a>
+                    <br/>
+                }
             </div>
         </div>
     </div>

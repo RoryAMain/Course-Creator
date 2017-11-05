@@ -7,19 +7,19 @@
                 <textarea id="textEditortest">@Model.theQuestion.lectureText</textarea>
             }
             <div class="scrollable-menu leftPane listPane">
-                <ul>
-                    @foreach (var item in Model.questionList)
+                @foreach (var item in Model.questionList)
+                {
+                    @if (item.isMultipleChoice)
                     {
-                        @if (item.isMultipleChoice)
-                        {
-                            <li><a href="/Home/MultipleChoiceView/@item.Id/@item.TopicId">Question @item.questionOrder</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="/Home/CodeQuestionView/@item.Id/@item.TopicId">Question @item.questionOrder</a></li>
-                        }
+                        <a href="/Home/MultipleChoiceView/@item.Id/@item.TopicId">Question @item.questionOrder</a>
+                        <br />
                     }
-                </ul>
+                    else
+                    {
+                        <a href="/Home/CodeQuestionView/@item.Id/@item.TopicId">Question @item.questionOrder</a>
+                        <br />
+                    }
+                }
             </div>
         </div>
         <div class="col-8 jumbotron multChoicePane scrollable-menu">
@@ -51,11 +51,11 @@
         </div>
         <div class="col-2 listPane scrollable-menu referencePane">
             <div>
-                <ul>
-                    <li>Test text</li>
-                    <li>Test text</li>
-                    <li>Test test</li>
-                </ul>
+                @foreach (var item in Model.referenceList)
+                {
+                    <a href="@item.Link">@item.Text</a>
+                    <br/>
+                }
             </div>
         </div>
     </div>
