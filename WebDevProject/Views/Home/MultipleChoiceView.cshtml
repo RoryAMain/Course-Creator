@@ -1,27 +1,25 @@
 ﻿@model WebDevProject.Models.MultipleChoiceViewModel
 <div class="container mainBody">
     <div class="row">
-        <div class="col-4 scrollable-menu questionPane">
+        <div class="col-2 scrollable-menu questionPane">
             @if (Model.theQuestion.lectureText != "")
             {
-                <div class="jumbotron">
-                    <p>@Html.DisplayFor(model => model.theQuestion.lectureText)</p>
-                </div>
+                <textarea id="textEditortest">@Model.theQuestion.lectureText</textarea>
             }
             <div class="scrollable-menu leftPane listPane">
-                <ul>
-                    @foreach (var item in Model.questionList)
+                @foreach (var item in Model.questionList)
+                {
+                    @if (item.isMultipleChoice)
                     {
-                        @if (item.isMultipleChoice)
-                        {
-                            <li><a href="/Home/MultipleChoiceView/@item.Id/@item.TopicId">Question @item.questionOrder</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="/Home/CodeQuestionView/@item.Id/@item.TopicId">Question @item.questionOrder</a></li>
-                        }
+                        <a href="/Home/MultipleChoiceView/@item.Id/@item.TopicId">Question @item.questionOrder</a>
+                        <br />
                     }
-                </ul>
+                    else
+                    {
+                        <a href="/Home/CodeQuestionView/@item.Id/@item.TopicId">Question @item.questionOrder</a>
+                        <br />
+                    }
+                }
             </div>
         </div>
         <div class="col-8 jumbotron multChoicePane scrollable-menu">
@@ -50,6 +48,15 @@
                 isEndOfList = true;
                 <button type="button" class="btn btn-success" id= "finishButton">Finish</button>
             }
+        </div>
+        <div class="col-2 listPane scrollable-menu referencePane">
+            <div>
+                @foreach (var item in Model.referenceList)
+                {
+                    <a href="@item.Link">@item.Text</a>
+                    <br/>
+                }
+            </div>
         </div>
     </div>
 </div>
@@ -81,4 +88,16 @@
                 window.location.href = "@nextURL";
             });
         });
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="~/lib/simplemde/dist/simplemde.min.js" type="text/javascript"></script>
+<script>
+    const lectureArea = new SimpleMDE({
+        element: document.getElementById("textEditortest"),
+        spellChecker: false,
+        toolbar: false,
+        status: false,
+    });
+    lectureArea.togglePreview()
 </script>

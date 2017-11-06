@@ -44,6 +44,22 @@ namespace WebDevProject.Controllers
                                      Id = module.Id
                                  }).ToList();
             }
+
+            //Right now this assumes there will only be one Index. In the case that more Indexes are ever added(for more classes),
+            //then modify this search with "where reference.indexId == Id", where Id is passed in to this IActionResult.
+            var referenceInfo = from reference in _context.IndexReferenceList
+                                select reference;
+
+            if(referenceInfo != null)
+            {
+                model.referenceList = (from reference in referenceInfo
+                                       select new IndexReferenceList()
+                                       {
+                                           Link = reference.Link,
+                                           Text = reference.Text
+                                       }).ToList();
+            }
+
             return View(model);
         }
 
@@ -68,6 +84,20 @@ namespace WebDevProject.Controllers
             }
 
             model.theModule = module;
+
+            var referenceInfo = from reference in _context.ModuleReferenceList
+                                where reference.ModuleId == Id
+                                select reference;
+
+            if (referenceInfo != null)
+            {
+                model.referenceList = (from reference in referenceInfo
+                                       select new ModuleReferenceList()
+                                       {
+                                           Link = reference.Link,
+                                           Text = reference.Text
+                                       }).ToList();
+            }
 
             return View(model);
         }
@@ -94,6 +124,20 @@ namespace WebDevProject.Controllers
             }
 
             model.theTopic = topic;
+
+            var referenceInfo = from reference in _context.TopicReferenceList
+                                where reference.TopicId == Id
+                                select reference;
+
+            if (referenceInfo != null)
+            {
+                model.referenceList = (from reference in referenceInfo
+                                       select new TopicReferenceList()
+                                       {
+                                           Link = reference.Link,
+                                           Text = reference.Text
+                                       }).ToList();
+            }
 
             return View(model);
         }
@@ -125,6 +169,20 @@ namespace WebDevProject.Controllers
                                    }).ToList();
             }
 
+            var referenceInfo = from reference in _context.QuestionReferenceList
+                                where reference.QuestionId == Id
+                                select reference;
+
+            if (referenceInfo != null)
+            {
+                model.referenceList = (from reference in referenceInfo
+                                       select new QuestionReferenceList()
+                                       {
+                                           Link = reference.Link,
+                                           Text = reference.Text
+                                       }).ToList();
+            }
+
             return View(model);
         }
 
@@ -153,6 +211,20 @@ namespace WebDevProject.Controllers
                                           TopicId = q.TopicId,
                                           questionOrder = q.questionOrder
                                       }).ToList();
+            }
+
+            var referenceInfo = from reference in _context.QuestionReferenceList
+                                where reference.QuestionId == Id
+                                select reference;
+
+            if (referenceInfo != null)
+            {
+                model.referenceList = (from reference in referenceInfo
+                                       select new QuestionReferenceList()
+                                       {
+                                           Link = reference.Link,
+                                           Text = reference.Text
+                                       }).ToList();
             }
 
             return View(model);
