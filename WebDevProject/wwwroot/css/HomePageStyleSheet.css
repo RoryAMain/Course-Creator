@@ -18,6 +18,14 @@
     overflow: hidden;
     border: solid;
     border-color: lightslategray;
+    text-align:left;
+}
+
+.referencePane {
+    overflow: hidden;
+    border: solid;
+    border-color: lightslategray;
+    text-align:left;
 }
 
 .expandableMiddlePane {
@@ -32,10 +40,6 @@
     border: solid;
     border-color: lightslategray;
     display: none;
-}
-
-.listPane ul {
-    list-style-type: none
 }
 
 /*Right area for home page text/videos/images*/
@@ -60,14 +64,16 @@
 }
 
 .YoutubeVideo iframe {
-    width: 420px;
-    height: 315px;
-    margin: auto;
+    display:block;
+    width:100%;
+    height:100%;
+    margin:auto;
 }
 
 .UploadVideo video {
-    width: 420px;
-    height: 315px;
+    display:block;
+    width: 100%;
+    height: 100%;
     margin: auto;
 }
 

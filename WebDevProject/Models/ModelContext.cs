@@ -18,9 +18,14 @@ namespace WebDevProject.Models
             _config = config;
         }
 
+        public DbSet<Index> Index { get; set; }
         public DbSet<Module> Module { get; set; }
         public DbSet<Topic> Topic { get; set; }
         public DbSet<Question> Question { get; set; }
+        public DbSet<IndexReferenceList> IndexReferenceList { get; set; }
+        public DbSet<ModuleReferenceList> ModuleReferenceList { get; set; }
+        public DbSet<TopicReferenceList> TopicReferenceList { get; set; }
+        public DbSet<QuestionReferenceList> QuestionReferenceList { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

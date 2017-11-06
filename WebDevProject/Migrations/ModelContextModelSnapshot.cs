@@ -16,10 +16,46 @@ namespace WebDevProject.Migrations
                 .HasAnnotation("ProductVersion", "1.1.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("WebDevProject.Models.Index", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MP4Link");
+
+                    b.Property<string>("indexTitle");
+
+                    b.Property<string>("lectureText");
+
+                    b.Property<string>("youtubeURL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Index");
+                });
+
+            modelBuilder.Entity("WebDevProject.Models.IndexReferenceList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("IndexId");
+
+                    b.Property<string>("Link");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IndexReferenceList");
+                });
+
             modelBuilder.Entity("WebDevProject.Models.Module", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MP4Link");
 
                     b.Property<string>("lectureText");
 
@@ -34,10 +70,28 @@ namespace WebDevProject.Migrations
                     b.ToTable("Module");
                 });
 
+            modelBuilder.Entity("WebDevProject.Models.ModuleReferenceList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Link");
+
+                    b.Property<int>("ModuleId");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModuleReferenceList");
+                });
+
             modelBuilder.Entity("WebDevProject.Models.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MP4Link");
 
                     b.Property<int>("TopicId");
 
@@ -63,15 +117,35 @@ namespace WebDevProject.Migrations
 
                     b.Property<string>("suppliedCode");
 
+                    b.Property<string>("youtubeURL");
+
                     b.HasKey("Id");
 
                     b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("WebDevProject.Models.QuestionReferenceList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Link");
+
+                    b.Property<int>("QuestionId");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestionReferenceList");
                 });
 
             modelBuilder.Entity("WebDevProject.Models.Topic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MP4Link");
 
                     b.Property<int>("ModuleId");
 
@@ -86,6 +160,22 @@ namespace WebDevProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Topic");
+                });
+
+            modelBuilder.Entity("WebDevProject.Models.TopicReferenceList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Link");
+
+                    b.Property<string>("Text");
+
+                    b.Property<int>("TopicId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TopicReferenceList");
                 });
         }
     }

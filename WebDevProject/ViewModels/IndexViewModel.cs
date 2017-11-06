@@ -9,5 +9,8 @@ namespace WebDevProject.Models
     public class IndexViewModel
     {
         public IList<Module> Modules { get; set; }
+        public Index theIndex { get; set; }
+        public IList<IndexReferenceList> referenceList { get; set; }
+
     }
 }
