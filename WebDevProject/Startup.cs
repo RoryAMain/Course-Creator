@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using WebDevProject.Models;
 
 namespace WebDevProject
 {
@@ -38,7 +38,9 @@ namespace WebDevProject
         {
             // Add framework services.
             services.AddSingleton(_config);
-
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ModelContext>()
+                .AddDefaultTokenProviders();
             services.AddDbContext<Models.ModelContext>();
             services.AddMvc();
         }
@@ -60,7 +62,7 @@ namespace WebDevProject
             }
 
             app.UseStaticFiles();
-
+            app.UseIdentity();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
