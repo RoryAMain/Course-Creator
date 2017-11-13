@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WebDevProject.Models;
+using WebDevProject.Configuration;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebDevProject
 {
@@ -67,8 +69,10 @@ namespace WebDevProject
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}/{topicId?}");
+                    template: "{controller=Account}/{action=Login}/{id?}/{topicId?}");
             });
+
+            new UserRoleSeed(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).Seed();
         }
     }
 }
