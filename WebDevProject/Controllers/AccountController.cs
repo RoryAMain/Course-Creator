@@ -76,5 +76,11 @@ namespace WebDevProject.Controllers
             }
             return View(vm);
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
     }
 }

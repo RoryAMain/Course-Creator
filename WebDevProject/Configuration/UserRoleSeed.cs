@@ -28,6 +28,11 @@ namespace WebDevProject.Configuration
                 await _roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
             }
 
+            if ((await _roleManager.FindByNameAsync("Instructor")) == null)
+            {
+                await _roleManager.CreateAsync(new IdentityRole { Name = "Instructor" });
+            }
+
         }
 
     }

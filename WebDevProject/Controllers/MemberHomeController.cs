@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebDevProject.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Member, Admin, Instructor")]
     public class MemberHomeController : Controller
     {
         // GET: /<controller>/
@@ -27,7 +27,7 @@ namespace WebDevProject.Controllers
         [AllowAnonymous]
         public IActionResult AnonymousAccess()
         {
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
