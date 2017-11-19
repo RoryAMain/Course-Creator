@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http.Features;
 
 
 
@@ -41,6 +42,13 @@ namespace WebDevProject
 
             services.AddDbContext<Models.ModelContext>();
             services.AddMvc();
+
+            //This section expands the file size limit on video uploads.
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = int.MaxValue;
+                x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,5 +76,6 @@ namespace WebDevProject
                     template: "{controller=Home}/{action=Index}/{id?}/{topicId?}");
             });
         }
+
     }
 }

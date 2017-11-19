@@ -7,6 +7,8 @@ using WebDevProject.Controllers;
 using WebDevProject.Models;
 //using WebDevProject.ViewModels;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,7 +25,8 @@ namespace WebDevProject.Controllers
             _config = config;
         }
 
-        // GET: /<controller>/
+        // Index Actions
+        [HttpGet]
         public IActionResult Index()
         {
             var moduleInfo = from mod in _context.Module
@@ -63,6 +66,102 @@ namespace WebDevProject.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult IndexAddModule(string moduleTitle, int Id)
+        {
+            if(ModelState.IsValid)
+            {
+                Module module = new Module();
+                module.moduleTitle = moduleTitle;
+                _context.Module.Add(module);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult IndexAddReference(string Link,string Text,int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                IndexReferenceList referenceList = new IndexReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.IndexId = Id;
+                _context.IndexReferenceList.Add(referenceList);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult IndexEditYoutube(string Link, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Index theIndex = _context.Index.SingleOrDefault(ind => ind.Id == Id);
+                theIndex.youtubeURL = Link;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        [HttpPost ("IndexEditLecture")]
+        public ActionResult IndexEditLecturePost(string lectureText, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Index theIndex = _context.Index.SingleOrDefault(ind => ind.Id == Id);
+                theIndex.lectureText = lectureText;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        [HttpPost ("IndexUploadFile")]
+        public async Task<IActionResult> Post(int Id, IFormFile file)
+        {
+            long size = file.Length;
+            var filePath = ("wwwroot/mp4/" + file.FileName);
+            string fileName = file.FileName;
+            
+            if(file.Length > 0)
+            {
+                using (var stream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            return RedirectToAction("IndexEditMP4", new { Link = fileName,Id = Id});
+
+        }
+
+        [HttpGet]
+        public ActionResult IndexEditMP4(string Link, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Index theIndex = _context.Index.SingleOrDefault(ind => ind.Id == Id);
+                theIndex.MP4Link = Link;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        //Module Actions
+
+        [HttpGet]
         public IActionResult ModuleView(int Id)
         {
             var topicInfo = from top in _context.Topic
@@ -102,6 +201,104 @@ namespace WebDevProject.Controllers
             return View(model);
         }
 
+        [HttpPost("ModuleEditLecture")]
+        public ActionResult ModuleEditLecturePost(string lectureText, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Module theModule = _context.Module.SingleOrDefault(mod => mod.Id == Id);
+                theModule.lectureText = lectureText;
+                _context.SaveChanges();
+                return RedirectToAction("ModuleView",new { Id = Id});
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ModuleAddTopic(string topicTitle, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Topic topic = new Topic();
+                topic.topicTitle = topicTitle;
+                topic.ModuleId = Id;
+                _context.Topic.Add(topic);
+                _context.SaveChanges();
+                return RedirectToAction("ModuleView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ModuleAddReference(string Link, string Text, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                ModuleReferenceList referenceList = new ModuleReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.ModuleId = Id;
+                _context.ModuleReferenceList.Add(referenceList);
+                _context.SaveChanges();
+                return RedirectToAction("ModuleView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ModuleEditYoutube(string Link, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Module theModule = _context.Module.SingleOrDefault(mod => mod.Id == Id);
+                theModule.videoURL = Link;
+                _context.SaveChanges();
+                return RedirectToAction("ModuleView", new {Id= Id});
+            }
+
+            return View();
+        }
+
+        [HttpPost("ModuleUploadFile")]
+        public async Task<IActionResult> ModulePost(int Id, IFormFile file)
+        {
+            long size = file.Length;
+            var filePath = ("wwwroot/mp4/" + file.FileName);
+            string fileName = file.FileName;
+
+            if (file.Length > 0)
+            {
+                using (var stream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            return RedirectToAction("ModuleEditMP4", new { Link = fileName, Id = Id });
+
+        }
+
+        [HttpGet]
+        public ActionResult ModuleEditMP4(string Link, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Module theModule = _context.Module.SingleOrDefault(mod => mod.Id == Id);
+                theModule.MP4Link = Link;
+                _context.SaveChanges();
+                return RedirectToAction("ModuleView",new { Id = Id});
+            }
+
+            return View();
+        }
+
+
+        //Topic Actions
+
+        [HttpGet]
         public IActionResult TopicView(int Id)
         {
             var questionInfo = from q in _context.Question
@@ -141,6 +338,102 @@ namespace WebDevProject.Controllers
 
             return View(model);
         }
+
+        [HttpPost("TopicEditLecture")]
+        public ActionResult TopicEditLecturePost(string lectureText, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Topic theTopic = _context.Topic.SingleOrDefault(top => top.Id == Id);
+                theTopic.lectureText = lectureText;
+                _context.SaveChanges();
+                return RedirectToAction("TopicView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TopicAddQuestion(string topicTitle, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Topic topic = new Topic();
+                topic.topicTitle = topicTitle;
+                topic.ModuleId = Id;
+                _context.Topic.Add(topic);
+                _context.SaveChanges();
+                return RedirectToAction("ModuleView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TopicAddReference(string Link, string Text, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                TopicReferenceList referenceList = new TopicReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.TopicId = Id;
+                _context.TopicReferenceList.Add(referenceList);
+                _context.SaveChanges();
+                return RedirectToAction("TopicView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TopicEditYoutube(string Link, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Topic theTopic = _context.Topic.SingleOrDefault(top => top.Id == Id);
+                theTopic.videoURL = Link;
+                _context.SaveChanges();
+                return RedirectToAction("TopicView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost("TopicUploadFile")]
+        public async Task<IActionResult> TopicPost(int Id, IFormFile file)
+        {
+            long size = file.Length;
+            var filePath = ("wwwroot/mp4/" + file.FileName);
+            string fileName = file.FileName;
+
+            if (file.Length > 0)
+            {
+                using (var stream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            return RedirectToAction("TopicEditMP4", new { Link = fileName, Id = Id });
+
+        }
+
+        [HttpGet]
+        public ActionResult TopicEditMP4(string Link, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                Topic theTopic = _context.Topic.SingleOrDefault(top => top.Id == Id);
+                theTopic.MP4Link = Link;
+                _context.SaveChanges();
+                return RedirectToAction("TopicView", new { Id = Id});
+            }
+
+            return View();
+        }
+
+        //Multiple Choice Actions
 
         public IActionResult MultipleChoiceView(int Id, int topicId)
         {
@@ -185,6 +478,10 @@ namespace WebDevProject.Controllers
 
             return View(model);
         }
+
+
+
+        //Code Question Actions
 
         public IActionResult CodeQuestionView(int Id, int topicId)
         {

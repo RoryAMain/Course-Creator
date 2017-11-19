@@ -10,10 +10,11 @@
                 <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
                     @foreach (var item in Model.Topics)
                     {
-                        <a href="/Home/TopicView/@item.Id">@item.topicTitle</a><button id="rightTest" style="color:black">-></button>
+                        <a href="/Home/TopicView/@item.Id">@item.topicTitle</a>
                         <br />
                     }
             </div>
+            <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddItemModal" style="max-width:100%; height:auto;" id="addButton teacher" />
 
         </div>
 
@@ -21,8 +22,21 @@
         <div class="col-8 scrollable-menu rightPane">
 
             <!-- This place can be filled with teacher supplied text. We should probably still sanitize this input somehow. -->
-            <textarea id="textEditortest"># @Model.theModule.moduleTitle
- @Model.theModule.lectureText</textarea>
+            <textarea id="textEditor">@Model.theModule.lectureText</textarea>
+
+            <div class="row">
+                <div class="btn-group col-sm-12" role="group">
+                    <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveLecture()">
+                    <input name="editLectureButton" id="editLecture" type="button" class="btn-sm btn-primary" style="float:right;" value="Edit" onclick="teacherModeToggle()">
+                </div>
+            </div>
+
+            <!--This form is hidden and sends the updated lecture text to the controller. It is triggered by the save button above.-->
+            <form method="post" name="editLecture" asp-controller="ModuleEditLecture" asp-action="Index">
+                <input type="hidden" name="lectureText" />
+                <input type="hidden" name="Id" value="@Model.theModule.Id" />
+            </form>
+
             @{ string youtubeURL = Model.theModule.videoURL;}
             @{ string MP4Link = Model.theModule.MP4Link;}
 
@@ -64,9 +78,17 @@
                 }
             </div>
 
+        <div class="row">
+            <div class="col-xs-6">
+                <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#EditYoutubeModal" style="max-width:100%; height:auto;" id="addButton teacher" />
+            </div>
+            <div class="col-xs-6">
+                <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#EditMP4Modal" style="max-width:100%; height:auto;" id="addButton teacher" />
 
-
+            </div>
         </div>
+    </div>
+
         <div class="col-2 listPane scrollable-menu referencePane">
             <div>
                 @foreach (var item in Model.referenceList)
@@ -74,19 +96,182 @@
                     <a href="@item.Link">@item.Text</a>
                     <br />
                 }
+                <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddReferenceModal" style="max-width:100%; height:auto;" id="addButton teacher" />
+
             </div>
         </div>
     </div>
 </div>
+
+<!--Modal for adding a new Module-->
+<div class="modal fade" id="AddItemModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog" style="transform: translate(0, 0%);">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Create</h5>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                @using (Html.BeginForm("ModuleAddTopic", "Home", new { Id = Model.theModule.Id},FormMethod.Post))
+                {
+                    <form id="createForm" class="form-horizontal">
+                        <div class="row form-group">
+                            <label class="col-xs-3 control-label">New Topic Name:</label>
+                            <div class="col-xs-5">
+                                <input type="text" class="form-control" name="topicTitle" />
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-xs-5 col-xs-offset-3">
+                                <input type="submit" class="btn btn-primary" value="Create">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal for adding a new Reference-->
+<div class="modal fade" id="AddReferenceModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog" style="transform: translate(0, 0%);">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Create</h5>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                @using (Html.BeginForm("ModuleAddReference", "Home", new { Id = Model.theModule.Id }, FormMethod.Post))
+                {
+                    <form id="createForm" class="form-horizontal">
+                        <div class="row form-group">
+                            <label class="col-xs-3 control-label">Link:</label>
+                            <div class="col-xs-5">
+                                <input type="text" class="form-control" name="Link" />
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <label class="col-xs-3 control-label">Text:</label>
+                            <div class="col-xs-5">
+                                <input type="text" class="form-control" name="Text" />
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-xs-5 col-xs-offset-3">
+                                <input type="submit" class="btn btn-primary" value="Create">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal for editing Youtube Link-->
+<div class="modal fade" id="EditYoutubeModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog" style="transform: translate(0, 0%);">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Edit</h5>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                @using (Html.BeginForm("ModuleEditYoutube", "Home", new { Id = Model.theModule.Id }, FormMethod.Post))
+                {
+                    <form id="createForm" class="form-horizontal">
+                        <div class="row form-group">
+                            <label class="col-xs-3 control-label">Embedded Link:</label>
+                            <div class="col-xs-5">
+                                <input type="text" class="form-control" name="Link" />
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-xs-5 col-xs-offset-3">
+                                <input type="submit" class="btn btn-primary" value="Save">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal for editing MP4 Link-->
+<div class="modal fade" id="EditMP4Modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog" style="transform: translate(0, 0%);">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Edit</h5>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                <form id="createForm" class="form-horizontal" method="post" enctype="multipart/form-data" asp-controller="ModuleUploadFile" asp-action="Index">
+                    <div class="row form-group">
+                        <label class="col-xs-3 control-label">MP4 Link:</label>
+                        <div class="col-xs-5">
+                            <input type="file" name="file" accept=".mp4" />
+                            <input type="hidden" name="Id" readonly value="@Model.theModule.Id">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <input type="submit" class="btn btn-primary" value="Save">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="~/lib/simplemde/dist/simplemde.min.js" type="text/javascript"></script>
 <script>
-        const lectureArea = new SimpleMDE({
-            element: document.getElementById("textEditortest"),
-            spellChecker: false,
-            toolbar: false,
-            status: false,
-        });
-        lectureArea.togglePreview()
+    const lectureArea = new SimpleMDE({
+        element: document.getElementById("textEditor"),
+        status: false,
+    });
+
+    lectureArea.togglePreview();
+    $(".rightPane").find(".editor-toolbar").css("display", "none");
+
+    function teacherModeToggle() {
+        lectureArea.togglePreview();
+        $(".rightPane").find(".editor-toolbar").css("display", "block");
+        $(".rightPane").find(".editor-toolbar.disabled-for-preview").css("display", "none");
+    }
+
+    function saveLecture() {
+        $('input[name="lectureText"]').val(lectureArea.value());
+        document.editLecture.submit();
+    }
 </script>

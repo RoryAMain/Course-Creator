@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
     <Folder Include="Controllers\Web\" />
-    <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
@@ -31,6 +30,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.Web">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Microsoft.VisualStudio.Web.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
