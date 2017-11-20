@@ -71,8 +71,13 @@ namespace WebDevProject.Controllers
         {
             if(ModelState.IsValid)
             {
+                var moduleInfo = from mod in _context.Module
+                                   select mod;
+                int moduleOrder = moduleInfo.Count();
+
                 Module module = new Module();
                 module.moduleTitle = moduleTitle;
+                module.moduleOrder = moduleOrder;
                 _context.Module.Add(module);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -220,9 +225,15 @@ namespace WebDevProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                var topicInfo = from top in _context.Topic
+                                   where top.ModuleId == Id
+                                   select top;
+                int topicOrder = topicInfo.Count();
+
                 Topic topic = new Topic();
                 topic.topicTitle = topicTitle;
                 topic.ModuleId = Id;
+                topic.topicOrder = topicOrder;
                 _context.Topic.Add(topic);
                 _context.SaveChanges();
                 return RedirectToAction("ModuleView", new { Id = Id });
@@ -354,16 +365,41 @@ namespace WebDevProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult TopicAddQuestion(string topicTitle, int Id)
+        public ActionResult TopicAddQuestion(string QuestionType, string QuestionString, int Id)
         {
             if (ModelState.IsValid)
             {
-                Topic topic = new Topic();
-                topic.topicTitle = topicTitle;
-                topic.ModuleId = Id;
-                _context.Topic.Add(topic);
-                _context.SaveChanges();
-                return RedirectToAction("ModuleView", new { Id = Id });
+                var questionInfo = from q in _context.Question
+                                   where q.TopicId == Id
+                                   select q;
+                int questionOrder = questionInfo.Count();
+
+
+
+                if (QuestionType == "Coding")
+                {
+                    Question question = new Question();
+                    question.TopicId = Id;
+                    question.isMultipleChoice = false;
+                    question.questionString = QuestionString;
+                    question.questionOrder = questionOrder;
+                    _context.Question.Add(question);
+                    _context.SaveChanges();
+                    return RedirectToAction("TopicView", new { Id = Id });
+                }
+
+                else
+                {
+                    Question question = new Question();
+                    question.TopicId = Id;
+                    question.isMultipleChoice = true;
+                    question.questionString = QuestionString;
+                    question.questionOrder = questionOrder;
+                    _context.Question.Add(question);
+                    _context.SaveChanges();
+                    return RedirectToAction("TopicView", new { Id = Id });
+                }
+
             }
 
             return View();

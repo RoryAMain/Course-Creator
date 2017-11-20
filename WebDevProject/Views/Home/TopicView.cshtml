@@ -113,7 +113,7 @@
 
 
 
-<!--Modal for adding a new Module-->
+<!--Modal for adding a new Question-->
 <div class="modal fade" id="AddItemModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
     <div class="modal-dialog" style="transform: translate(0, 0%);">
         <div class="modal-content">
@@ -129,10 +129,20 @@
                 @using (Html.BeginForm("TopicAddQuestion", "Home", new { Id = Model.theTopic.Id }, FormMethod.Post))
                 {
                     <form id="createForm" class="form-horizontal">
+
+                        <label for="questionSelect">Question Type:</label>
                         <div class="row form-group">
-                            <label class="col-xs-3 control-label">New Question Name:</label>
-                            <div class="col-xs-5">
-                                <input type="text" class="form-control" name="topicTitle" />
+                            <select class="form-control" id="questionSelect" style="height:auto" name="QuestionType">
+                                <option value="" selected disabled>Please select an option...</option>
+                                <option value="Multiple Choice">Multiple Choice</option>
+                                <option value ="Coding">Coding</option>
+                            </select> 
+                        </div>
+
+                        <label for="questionTextArea">Question:</label>
+                        <div class="row form-group">
+                            <div class="col-xs-12">
+                                <textarea class="form-control" id="questionTextArea" rows="3" name="QuestionString"></textarea>
                             </div>
                         </div>
 
