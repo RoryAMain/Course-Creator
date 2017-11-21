@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using WebDevProject.Models;
+using WebDevProject.Configuration;
 
 namespace WebDevProject
 {
@@ -38,7 +40,9 @@ namespace WebDevProject
         {
             // Add framework services.
             services.AddSingleton(_config);
-
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ModelContext>()
+                .AddDefaultTokenProviders();
             services.AddDbContext<Models.ModelContext>();
             services.AddMvc();
         }
@@ -67,6 +71,8 @@ namespace WebDevProject
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}/{topicId?}");
             });
+
+            new UserRoleSeed(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).Seed();
         }
     }
 }

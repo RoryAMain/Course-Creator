@@ -7,6 +7,7 @@ using WebDevProject.Controllers;
 using WebDevProject.Models;
 //using WebDevProject.ViewModels;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,13 +15,15 @@ namespace WebDevProject.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private ModelContext _context;
         private IConfigurationRoot _config;
 
-        public HomeController(ModelContext context, IConfigurationRoot config)
+        public HomeController(ModelContext context, IConfigurationRoot config, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _config = config;
+            _userManager = userManager;
         }
 
         // GET: /<controller>/
