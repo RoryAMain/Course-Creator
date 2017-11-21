@@ -562,5 +562,29 @@ namespace WebDevProject.Controllers
 
             return View(model);
         }
+
+
+        [HttpPost]
+        public ActionResult QuestionAddReference(string Link, string Text, int TopicId,string isMultipleChoice, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                QuestionReferenceList referenceList = new QuestionReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.QuestionId = Id;
+                _context.QuestionReferenceList.Add(referenceList);
+                _context.SaveChanges();
+            }    
+
+            if (isMultipleChoice == "True")
+            {
+                return RedirectToAction("MultipleChoiceView", new { Id = Id, TopicId = TopicId });
+            }
+            else
+            {
+                return RedirectToAction("CodeQuestionView", new { Id = Id, TopicId = TopicId });
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@
             <!-- This place can be filled with teacher supplied text. We should probably still sanitize this input somehow. -->
             <textarea id="textEditor">@Model.theTopic.lectureText</textarea>
 
-            <div class="row">
+            <div class="row" id="teacher">
                 <div class="btn-group col-sm-12" role="group">
                     <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveLecture()">
                     <input name="editLectureButton" id="editLecture" type="button" class="btn-sm btn-primary" style="float:right;" value="Edit" onclick="teacherModeToggle()">
@@ -87,7 +87,7 @@
                 }
             </div>
 
-            <div class="row">
+            <div class="row" id="teacher">
                 <div class="col-xs-6">
                     <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#EditYoutubeModal" style="max-width:100%; height:auto;" id="addButton teacher" />
                 </div>
