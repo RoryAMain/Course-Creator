@@ -29,6 +29,9 @@ namespace WebDevProject.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            //var user = await _userManager.GetUserAsync(User);
+            ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
             var moduleInfo = from mod in _context.Module
                               select mod;
 
@@ -68,6 +71,8 @@ namespace WebDevProject.Controllers
 
         public IActionResult ModuleView(int Id)
         {
+            ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
             var topicInfo = from top in _context.Topic
                             where top.ModuleId == Id
                             select top;
@@ -107,6 +112,8 @@ namespace WebDevProject.Controllers
 
         public IActionResult TopicView(int Id)
         {
+            ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
             var questionInfo = from q in _context.Question
                                where q.TopicId == Id
                                select q;
@@ -147,6 +154,8 @@ namespace WebDevProject.Controllers
 
         public IActionResult MultipleChoiceView(int Id, int topicId)
         {
+            ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
             MultipleChoiceViewModel model = new MultipleChoiceViewModel();
 
             Question question = _context.Question.SingleOrDefault(quest => quest.Id == Id);
@@ -191,6 +200,8 @@ namespace WebDevProject.Controllers
 
         public IActionResult CodeQuestionView(int Id, int topicId)
         {
+            ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
             CodeQuestionViewModel model = new CodeQuestionViewModel();
 
             Question question = _context.Question.SingleOrDefault(quest => quest.Id == Id);
