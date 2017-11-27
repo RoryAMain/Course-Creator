@@ -1,7 +1,6 @@
 ﻿@model WebDevProject.Models.CodeQuestionViewModel
 <html lang="en">
 <head>
-    <title>CodeMirror in Action</title>
 
     <script src="js/vendor/jquery-1.9.1.js"></script>
 
@@ -19,9 +18,17 @@
     <div class="container mainBody">
         <div class="row">
             <div class="col-2 scrollable-menu questionPane">
-                @if (Model.theQuestion.lectureText != "")
+                @if (Model.theQuestion.lectureText != null | Model.theQuestion.lectureText != "" | true) //The True needs to be replaced with a check that is true if the viewer is a teacher.
                 {
                     <textarea id="textEditortest">@Model.theQuestion.lectureText</textarea>
+
+                    <div class="row" id="teacher">
+                        <div class="btn-group col-sm-12" role="group">
+                            <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveLecture()">
+                            <input name="editLectureButton" id="editLecture" type="button" class="btn-sm btn-primary" style="float:right;" value="Edit" onclick="teacherModeToggle()">
+                        </div>
+                    </div>
+
                 }
                 <div class="scrollable-menu leftPane listPane">
                     @foreach (var item in Model.questionList)
@@ -37,14 +44,25 @@
                             <br />
                         }
                     }
+
                 </div>
+
+
             </div>
             <div class="jumbotron col-8 scrollable-menu">
-        
+
                 <h3>@Html.DisplayFor(model => model.theQuestion.questionString)</h3>
                 <br />
                 <div id="editor1-pane">
                     <div id="editor1"></div>
+
+                    <div class="row" id="teacher">
+                        <div class="btn-group col-sm-12" role="group">
+                            <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveExampleCode()">
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="row">
                     <div class="col-6">
@@ -53,7 +71,7 @@
                         @{ bool isEndOfList = false;}
                         @if (Model.theQuestion.questionOrder < Model.orderListLength)
                         {
-                             isEndOfList = false;
+                            isEndOfList = false;
                             <button type="button" class="btn btn-success" id="nextButton">Next</button>
                         }
                         else
@@ -68,34 +86,96 @@
                     <br />
                     <div id="editor-2 pane">
                         <div id="editor2"></div>
+
+                        <div class="row" id="teacher">
+                            <div class="btn-group col-sm-12" role="group">
+                                <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveOutputCode()">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
             <div class="col-2 listPane scrollable-menu referencePane">
                 <div>
-                        @foreach (var item in Model.referenceList)
-                        {
-                            <a href="@item.Link">@item.Text</a>
+                    @foreach (var item in Model.referenceList)
+                    {
+                        <a href="@item.Link">@item.Text</a>
                             <br />
-                        }
+                    }
+                </div>
+
+                <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddReferenceModal" style="max-width:100%; height:auto;" id="addButton teacher" />
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--Modal for adding a new Reference-->
+    <div class="modal fade" id="AddReferenceModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog" style="transform: translate(0, 0%);">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title">Create</h5>
+                </div>
+
+                <div class="modal-body">
+                    <!-- The form is placed inside the body of modal -->
+                    @using (Html.BeginForm("QuestionAddReference", "Home", new { Id = Model.theQuestion.Id }, FormMethod.Post))
+                    {
+                        <form id="createForm" class="form-horizontal">
+                            <div class="row form-group">
+                                <label class="col-xs-3 control-label">Link:</label>
+                                <div class="col-xs-5">
+                                    <input type="text" class="form-control" name="Link" />
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-xs-3 control-label">Text:</label>
+                                <div class="col-xs-5">
+                                    <input type="text" class="form-control" name="Text" />
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="TopicId" value="@Model.theQuestion.TopicId" />
+                            <input type="hidden" name="isMultipleChoice" value="@Model.theQuestion.isMultipleChoice.ToString()" />
+
+                            <div class="row form-group">
+                                <div class="col-xs-5 col-xs-offset-3">
+                                    <input type="submit" class="btn btn-primary" value="Create">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    }
                 </div>
             </div>
         </div>
     </div>
-   @{ string nextURL = "";}
-@{
-    if (!isEndOfList)
-    {
-        if (Model.questionList[Model.theQuestion.questionOrder + 1].isMultipleChoice)
+
+
+
+
+    @{ string nextURL = "";}
+    @{
+        if (!isEndOfList)
         {
-            nextURL = "/Home/MultipleChoiceView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
-        }
-        else
-        {
-            nextURL = "/Home/CodeQuestionView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+            if (Model.questionList[Model.theQuestion.questionOrder + 1].isMultipleChoice)
+            {
+                nextURL = "/Home/MultipleChoiceView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+            }
+            else
+            {
+                nextURL = "/Home/CodeQuestionView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+            }
         }
     }
-}
     @{ string finishURL = "/Home/TopicView/" + Model.theQuestion.TopicId;}
     @{ var suppliedCode = Html.DisplayFor(model => model.theQuestion.suppliedCode);}
 
