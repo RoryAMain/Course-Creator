@@ -69,7 +69,7 @@ namespace WebDevProject
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}/{topicId?}");
+                    template: "{controller=Account}/{action=Login}/{id?}/{topicId?}");
             });
 
             new UserRoleSeed(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).Seed();
