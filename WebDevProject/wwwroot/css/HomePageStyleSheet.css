@@ -20,8 +20,7 @@
     overflow: hidden;
     border: solid;
     border-color: lightslategray;
-    text-align:left;
-    background-color: white;
+    text-align: left;
 }
 
 .referencePane {
@@ -29,7 +28,6 @@
     border: solid;
     border-color: lightslategray;
     text-align: left;
-    background-color: white;
 }
 
 .expandableMiddlePane {
@@ -68,14 +66,14 @@
 }
 
 .YoutubeVideo iframe {
-    display:block;
-    width:100%;
-    height:100%;
-    margin:auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: auto;
 }
 
 .UploadVideo video {
-    display:block;
+    display: block;
     width: 100%;
     height: 100%;
     margin: auto;
