@@ -2,6 +2,8 @@
     width: 100%;
     height: 100%;
     margin: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: #00583D;
 }
 
 .mainBody {
@@ -19,13 +21,15 @@
     border: solid;
     border-color: lightslategray;
     text-align:left;
+    background-color: white;
 }
 
 .referencePane {
     overflow: hidden;
     border: solid;
     border-color: lightslategray;
-    text-align:left;
+    text-align: left;
+    background-color: white;
 }
 
 .expandableMiddlePane {
@@ -79,4 +83,8 @@
 
 .multChoicePane {
     text-align: left;
+}
+
+.username {
+    color: #FFC425;
 }
