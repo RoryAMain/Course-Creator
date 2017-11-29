@@ -145,20 +145,23 @@
                         <label for="startingCodeArea">Answer/Expected Ouput:</label>
                         <div class="row form-group" style="width:100%;">
                             <div class="col-xs-12" style="width:100%;  height:135px;">
-                                <textarea class="form-control" id="startingCodeArea" rows="3" name="CodeString"></textarea>
+                                <textarea class="form-control" id="startingCodeArea" rows="3" name="answerString"></textarea>
                             </div>
                         </div>
 
                         <label for="AnswerTextArea">Starting Code:</label>
                         <div class="row form-group" style="width:100%;">
                             <div class="col-xs-12" style="width:100%;">
-                                <div id="CodeAnswerArea"></div>
+                                <textarea id="CodeAnswerArea"></textarea>
                             </div>
+                        </div>
+                        <div class="row form-group">
+                            <input type="hidden" name="codeString" id="codeString" />
                         </div>
 
                         <div class="row form-group">
                             <div class="col-xs-5 col-xs-offset-3">
-                                <input type="submit" class="btn btn-primary" value="Create">
+                                <input type="submit" class="btn btn-primary" value="Create" id="codeCreateButton">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
@@ -189,24 +192,24 @@
                         <label for="questionTextArea">Question:</label>
                         <div class="row form-group" style="width:100%;">
                             <div class="col-xs-12" style="width:100%; height:135px;">
-                                <textarea class="form-control" id="questionTextArea" rows="3" name="QuestionString"></textarea>
+                                <textarea class="form-control" id="questionTextArea" rows="3" name="questionString"></textarea>
                             </div>
                         </div>
 
                         <select class="form-control" id="multipleChoiceSelect" style="height:auto">
-                            <option value="" selected disabled>Number of Options</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
+                            <option value="" selected disabled name="numberOfQuestions">Number of Options</option>
+                            <option value="2" name="numberOfQuestions">2</option>
+                            <option value="3" name="numberOfQuestions">3</option>
+                            <option value="4" name="numberOfQuestions">4</option>
                         </select>
 
                         <div class="row form-group choice1">
                             <label for="choice1">Choice 1:</label>
                             <div class="col-xs-10">
-                                <textarea class="form-control" id="choice1" rows="1" name="choiceString"></textarea>
+                                <textarea class="form-control" id="choice1" rows="1" name="choiceString1"></textarea>
                             </div>
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="1" checked="" >
+                                <input type="radio" class="form-check-input" name="correctAnswer" id="optionsRadios1" value="1" checked="" >
                                 Correct Answer.
                             </label>
                         </div>
@@ -214,10 +217,10 @@
                         <div class="row form-group choice2">
                             <label for="choice1">Choice 2:</label>
                             <div class="col-xs-10">
-                                <textarea class="form-control" id="choice2" rows="1" name="choiceString"></textarea>
+                                <textarea class="form-control" id="choice2" rows="1" name="choiceString2"></textarea>
                             </div>
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="2" checked="">
+                                <input type="radio" class="form-check-input" name="correctAnswer" id="optionsRadios2" value="2" checked="">
                                 Correct Answer.
                             </label>
                         </div>
@@ -225,10 +228,10 @@
                         <div class="row form-group choice3"  style="display:none">
                             <label for="choice1">Choice 3:</label>
                             <div class="col-xs-10">
-                                <textarea class="form-control" id="choice3" rows="1" name="choiceString"></textarea>
+                                <textarea class="form-control" id="choice3" rows="1" name="choiceString3"></textarea>
                             </div>
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="3" checked="">
+                                <input type="radio" class="form-check-input" name="correctAnswer" id="optionsRadios3" value="3" checked="">
                                 Correct Answer.
                             </label>
                         </div>
@@ -236,10 +239,10 @@
                         <div class="row form-group choice4"  style="display:none">
                             <label for="choice1">Choice 4:</label>
                             <div class="col-xs-10">
-                                <textarea class="form-control" id="choice4" rows="1" name="choiceString"></textarea>
+                                <textarea class="form-control" id="choice4" rows="1" name="choiceString4"></textarea>
                             </div>
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios4" value="4" checked="">
+                                <input type="radio" class="form-check-input" name="correctAnswer" id="optionsRadios4" value="4" checked="">
                                 Correct Answer.
                             </label>
                         </div>
@@ -411,14 +414,6 @@
 
 </script>
 
-<script>
-    const codingModalLectureArea = new SimpleMDE({
-        element: document.getElementById("codingModalLectureTextArea"),
-        status: false,
-        toolbar: true
-    });
-</script>
-
 <!-- More examples at http://codemirror.net/demo/ -->
 <!-- add basic CodeMirror functionality -->
 <script src="~/lib/CodeMirror/lib/codemirror.js" type="text/javascript" charset="utf-8"></script>
@@ -431,13 +426,18 @@
 
 <script type="text/javascript">
         $(document).ready(function () {
-            window.codemirror1 = CodeMirror($('#CodeAnswerArea').get(0), {
+            var editor = CodeMirror.fromTextArea(document.getElementById("CodeAnswerArea"), {
                 value: "",
                 mode:  "python",
                 readOnly: false,
                 styleActiveLine: true,
                 lineNumbers: true,
-           });
+            });
+
+            $("#codeCreateButton").click(function () {
+                $('#codeString').val(editor.getValue());
+            });
+
         });
 </script>
 

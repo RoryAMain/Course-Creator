@@ -402,7 +402,7 @@ namespace WebDevProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult TopicAddQuestion(string QuestionType, string QuestionString, int Id)
+        public ActionResult TopicAddCodingQuestion( string questionString, string answerString, string codeString, int Id)
         {
             if (ModelState.IsValid)
             {
@@ -413,27 +413,49 @@ namespace WebDevProject.Controllers
                                    select q;
                 int questionOrder = questionInfo.Count();
 
+                Question question = new Question();
+                question.TopicId = Id;
+                question.isMultipleChoice = false;
+                question.questionString = questionString;
+                question.correctCodeAnswer = answerString;
+                question.suppliedCode = codeString;
+                question.questionOrder = questionOrder;
+                _context.Question.Add(question);
+                _context.SaveChanges();
+                return RedirectToAction("TopicView", new { Id = Id });
 
 
-                if (QuestionType == "Coding")
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TopicAddMultipleChoiceQuestion(string questionString, string choiceString1, string choiceString2, string choiceString3, string choiceString4, string correctAnswer, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                int correctAnswerAsInt = 0;
+                if (Int32.TryParse(correctAnswer, out correctAnswerAsInt))
                 {
-                    Question question = new Question();
-                    question.TopicId = Id;
-                    question.isMultipleChoice = false;
-                    question.questionString = QuestionString;
-                    question.questionOrder = questionOrder;
-                    _context.Question.Add(question);
-                    _context.SaveChanges();
-                    return RedirectToAction("TopicView", new { Id = Id });
-                }
 
-                else
-                {
+                    ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+                    var questionInfo = from q in _context.Question
+                                       where q.TopicId == Id
+                                       select q;
+                    int questionOrder = questionInfo.Count();
+
                     Question question = new Question();
                     question.TopicId = Id;
                     question.isMultipleChoice = true;
-                    question.questionString = QuestionString;
+                    question.questionString = questionString;
                     question.questionOrder = questionOrder;
+                    question.multipleChoice1 = choiceString1;
+                    question.multipleChoice2 = choiceString2;
+                    question.multipleChoice3 = choiceString3;
+                    question.multipleChoice4 = choiceString4;
+                    question.correctMultipleChoice = correctAnswerAsInt;
                     _context.Question.Add(question);
                     _context.SaveChanges();
                     return RedirectToAction("TopicView", new { Id = Id });
@@ -441,7 +463,7 @@ namespace WebDevProject.Controllers
 
             }
 
-            return View();
+            return RedirectToAction("TopicView", new { Id = Id });
         }
 
         [HttpPost]

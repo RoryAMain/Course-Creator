@@ -26,12 +26,18 @@
             <div class="radio">
                 <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice2)</label>
             </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice3)</label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice4)</label>
-            </div>
+            @if (Model.theQuestion.multipleChoice3 != "" && Model.theQuestion.multipleChoice3 != null)
+            {
+                <div class="radio">
+                    <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice3)</label>
+                </div>
+                @if (Model.theQuestion.multipleChoice4 != "" && Model.theQuestion.multipleChoice4 != null)
+                {
+                    <div class="radio">
+                        <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice4)</label>
+                    </div>
+                }
+             }
             <button type="button" class="btn btn-success submitButton">Submit</button>
             @{ bool isEndOfList = false;}
             @if (Model.theQuestion.questionOrder < Model.orderListLength)
