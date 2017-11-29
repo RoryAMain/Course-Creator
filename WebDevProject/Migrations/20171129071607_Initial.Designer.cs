@@ -8,13 +8,13 @@ using WebDevProject.Models;
 namespace WebDevProject.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    [Migration("20171107092527_Student_v3")]
-    partial class Student_v3
+    [Migration("20171129071607_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.3")
+                .HasAnnotation("ProductVersion", "1.1.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -196,6 +196,22 @@ namespace WebDevProject.Migrations
                     b.ToTable("Index");
                 });
 
+            modelBuilder.Entity("WebDevProject.Models.IndexReferenceList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("IndexId");
+
+                    b.Property<string>("Link");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IndexReferenceList");
+                });
+
             modelBuilder.Entity("WebDevProject.Models.Module", b =>
                 {
                     b.Property<int>("Id")
@@ -216,6 +232,22 @@ namespace WebDevProject.Migrations
                     b.ToTable("Module");
                 });
 
+            modelBuilder.Entity("WebDevProject.Models.ModuleReferenceList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Link");
+
+                    b.Property<int>("ModuleId");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModuleReferenceList");
+                });
+
             modelBuilder.Entity("WebDevProject.Models.Question", b =>
                 {
                     b.Property<int>("Id")
@@ -227,7 +259,7 @@ namespace WebDevProject.Migrations
 
                     b.Property<string>("correctCodeAnswer");
 
-                    b.Property<int?>("correctMultipleChoice");
+                    b.Property<int>("correctMultipleChoice");
 
                     b.Property<bool>("isMultipleChoice");
 
@@ -245,6 +277,8 @@ namespace WebDevProject.Migrations
 
                     b.Property<string>("questionString");
 
+                    b.Property<int>("selectedAnswer");
+
                     b.Property<string>("suppliedCode");
 
                     b.Property<string>("youtubeURL");
@@ -254,26 +288,20 @@ namespace WebDevProject.Migrations
                     b.ToTable("Question");
                 });
 
-            modelBuilder.Entity("WebDevProject.Models.Student", b =>
+            modelBuilder.Entity("WebDevProject.Models.QuestionReferenceList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Link");
 
-                    b.Property<double>("Progress");
+                    b.Property<int>("QuestionId");
 
-                    b.Property<int>("modulesCompleted");
-
-                    b.Property<double>("numberOfQuestions");
-
-                    b.Property<double>("questionsCompleted");
-
-                    b.Property<int>("topicsCompleted");
+                    b.Property<string>("Text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Student");
+                    b.ToTable("QuestionReferenceList");
                 });
 
             modelBuilder.Entity("WebDevProject.Models.Topic", b =>
@@ -296,6 +324,22 @@ namespace WebDevProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Topic");
+                });
+
+            modelBuilder.Entity("WebDevProject.Models.TopicReferenceList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Link");
+
+                    b.Property<string>("Text");
+
+                    b.Property<int>("TopicId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TopicReferenceList");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
