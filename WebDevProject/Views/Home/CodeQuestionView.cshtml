@@ -18,18 +18,6 @@
     <div class="container mainBody">
         <div class="row">
             <div class="col-2 scrollable-menu questionPane">
-                @if (Model.theQuestion.lectureText != null | Model.theQuestion.lectureText != "" | true) //The True needs to be replaced with a check that is true if the viewer is a teacher.
-                {
-                    <textarea id="textEditortest">@Model.theQuestion.lectureText</textarea>
-
-                    <div class="row" id="teacher">
-                        <div class="btn-group col-sm-12" role="group">
-                            <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveLecture()">
-                            <input name="editLectureButton" id="editLecture" type="button" class="btn-sm btn-primary" style="float:right;" value="Edit" onclick="teacherModeToggle()">
-                        </div>
-                    </div>
-
-                }
                 <div class="scrollable-menu leftPane listPane">
                     @foreach (var item in Model.questionList)
                     {
@@ -55,15 +43,9 @@
                 <br />
                 <div id="editor1-pane">
                     <div id="editor1"></div>
-
-                    <div class="row" id="teacher">
-                        <div class="btn-group col-sm-12" role="group">
-                            <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveExampleCode()">
-                        </div>
-                    </div>
-
-
                 </div>
+
+
                 <div class="row">
                     <div class="col-6">
                         <button type="button" class="btn btn-success compileButton" style="float:left">Compile</button>
@@ -86,13 +68,6 @@
                     <br />
                     <div id="editor-2 pane">
                         <div id="editor2"></div>
-
-                        <div class="row" id="teacher">
-                            <div class="btn-group col-sm-12" role="group">
-                                <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveOutputCode()">
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>

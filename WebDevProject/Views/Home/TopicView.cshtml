@@ -23,7 +23,12 @@
                     }
                 }
             </div>
-            <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddItemModal" style="max-width:100%; height:auto;" id="addButton teacher" />
+
+            <select class="form-control" id="questionSelect" style="height:auto" name="QuestionType">
+                <option value="" selected disabled>New Question</option>
+                <option value="Multiple Choice">Multiple Choice</option>
+                <option value="Coding">Coding</option>
+            </select>
 
         </div>
 
@@ -113,8 +118,8 @@
 
 
 
-<!--Modal for adding a new Question-->
-<div class="modal fade" id="AddItemModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+<!--Modal for adding a new Coding Question-->
+<div class="modal fade" id="AddCodingModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
     <div class="modal-dialog" style="transform: translate(0, 0%);">
         <div class="modal-content">
             <div class="modal-header" style="display:block">
@@ -126,24 +131,117 @@
 
             <div class="modal-body">
                 <!-- The form is placed inside the body of modal -->
-                @using (Html.BeginForm("TopicAddQuestion", "Home", new { Id = Model.theTopic.Id }, FormMethod.Post))
+                @using (Html.BeginForm("TopicAddCodingQuestion", "Home", new { Id = Model.theTopic.Id }, FormMethod.Post))
                 {
                     <form id="createForm" class="form-horizontal">
 
-                        <label for="questionSelect">Question Type:</label>
-                        <div class="row form-group">
-                            <select class="form-control" id="questionSelect" style="height:auto" name="QuestionType">
-                                <option value="" selected disabled>Please select an option...</option>
-                                <option value="Multiple Choice">Multiple Choice</option>
-                                <option value="Coding">Coding</option>
-                            </select>
-                        </div>
-
                         <label for="questionTextArea">Question:</label>
-                        <div class="row form-group">
-                            <div class="col-xs-12">
+                        <div class="row form-group" style="width:100%;">
+                            <div class="col-xs-12" style="width:100%; height:135px;">
                                 <textarea class="form-control" id="questionTextArea" rows="3" name="QuestionString"></textarea>
                             </div>
+                        </div>
+
+                        <label for="startingCodeArea">Answer/Expected Ouput:</label>
+                        <div class="row form-group" style="width:100%;">
+                            <div class="col-xs-12" style="width:100%;  height:135px;">
+                                <textarea class="form-control" id="startingCodeArea" rows="3" name="CodeString"></textarea>
+                            </div>
+                        </div>
+
+                        <label for="AnswerTextArea">Starting Code:</label>
+                        <div class="row form-group" style="width:100%;">
+                            <div class="col-xs-12" style="width:100%;">
+                                <div id="CodeAnswerArea"></div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-xs-5 col-xs-offset-3">
+                                <input type="submit" class="btn btn-primary" value="Create">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal for adding a new Multiple Choice Question-->
+<div class="modal fade" id="AddMultipleChoiceModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog" style="transform: translate(0, 0%);">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Create</h5>
+            </div>
+
+            <div class="modal-body" id="multipleChoiceModalBody">
+                <!-- The form is placed inside the body of modal -->
+                @using (Html.BeginForm("TopicAddMultipleChoiceQuestion", "Home", new { Id = Model.theTopic.Id }, FormMethod.Post))
+                {
+                    <form id="createForm" class="form-horizontal">
+
+                        <label for="questionTextArea">Question:</label>
+                        <div class="row form-group" style="width:100%;">
+                            <div class="col-xs-12" style="width:100%; height:135px;">
+                                <textarea class="form-control" id="questionTextArea" rows="3" name="QuestionString"></textarea>
+                            </div>
+                        </div>
+
+                        <select class="form-control" id="multipleChoiceSelect" style="height:auto">
+                            <option value="" selected disabled>Number of Options</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+
+                        <div class="row form-group choice1">
+                            <label for="choice1">Choice 1:</label>
+                            <div class="col-xs-10">
+                                <textarea class="form-control" id="choice1" rows="1" name="choiceString"></textarea>
+                            </div>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="1" checked="" >
+                                Correct Answer.
+                            </label>
+                        </div>
+
+                        <div class="row form-group choice2">
+                            <label for="choice1">Choice 2:</label>
+                            <div class="col-xs-10">
+                                <textarea class="form-control" id="choice2" rows="1" name="choiceString"></textarea>
+                            </div>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="2" checked="">
+                                Correct Answer.
+                            </label>
+                        </div>
+
+                        <div class="row form-group choice3"  style="display:none">
+                            <label for="choice1">Choice 3:</label>
+                            <div class="col-xs-10">
+                                <textarea class="form-control" id="choice3" rows="1" name="choiceString"></textarea>
+                            </div>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="3" checked="">
+                                Correct Answer.
+                            </label>
+                        </div>
+
+                        <div class="row form-group choice4"  style="display:none">
+                            <label for="choice1">Choice 4:</label>
+                            <div class="col-xs-10">
+                                <textarea class="form-control" id="choice4" rows="1" name="choiceString"></textarea>
+                            </div>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios4" value="4" checked="">
+                                Correct Answer.
+                            </label>
                         </div>
 
                         <div class="row form-group">
@@ -294,4 +392,75 @@
         $('input[name="lectureText"]').val(lectureArea.value());
         document.editLecture.submit();
     }
+</script>
+
+<script>
+
+    var go = false;
+    $('#questionSelect').on('click', function () {
+        if (go) {
+            if (this.value == 'Multiple Choice') {
+                $('#AddMultipleChoiceModal').modal('show');
+            }
+            if (this.value == 'Coding') {
+                $('#AddCodingModal').modal('show');
+            }
+            go = false;
+        } else { go = true; }
+    }).on('blur', function () { go = false; });
+
+</script>
+
+<script>
+    const codingModalLectureArea = new SimpleMDE({
+        element: document.getElementById("codingModalLectureTextArea"),
+        status: false,
+        toolbar: true
+    });
+</script>
+
+<!-- More examples at http://codemirror.net/demo/ -->
+<!-- add basic CodeMirror functionality -->
+<script src="~/lib/CodeMirror/lib/codemirror.js" type="text/javascript" charset="utf-8"></script>
+<script src="~/lib/CodeMirror/addon/selection/active-line.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="~/lib/CodeMirror/lib/codemirror.css" />
+
+<!-- add python-mode dependencies -->
+<script src="~/lib/CodeMirror/mode/python/python.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            window.codemirror1 = CodeMirror($('#CodeAnswerArea').get(0), {
+                value: "",
+                mode:  "python",
+                readOnly: false,
+                styleActiveLine: true,
+                lineNumbers: true,
+           });
+        });
+</script>
+
+<script>
+
+        var go = false;
+        $('#multipleChoiceSelect').on('click', function () {
+            if (go) {
+                if (this.value == '2') {
+                    $("#multipleChoiceModalBody").find(".choice3").css("display", "none");
+                    $("#multipleChoiceModalBody").find(".choice4").css("display", "none");
+                }
+                if (this.value == '3') {
+                    $("#multipleChoiceModalBody").find(".choice3").css("display", "flex");
+                    $("#multipleChoiceModalBody").find(".choice4").css("display", "none");
+                }
+                if (this.value == '4') {
+                    $("#multipleChoiceModalBody").find(".choice3").css("display", "flex");
+                    $("#multipleChoiceModalBody").find(".choice4").css("display", "flex");
+
+                }
+                go = false;
+            } else { go = true; }
+        }).on('blur', function () { go = false; });
+
 </script>

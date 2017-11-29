@@ -2,10 +2,6 @@
 <div class="container mainBody">
     <div class="row">
         <div class="col-2 scrollable-menu questionPane">
-            @if (Model.theQuestion.lectureText != "")
-            {
-            <textarea id="textEditortest">@Model.theQuestion.lectureText</textarea>
-            }
             <div class="scrollable-menu leftPane listPane">
                 @foreach (var item in Model.questionList)
                 {
