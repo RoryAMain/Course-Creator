@@ -92,16 +92,6 @@
                 }
             </div>
 
-            <div class="row" id="teacher">
-                <div class="col-xs-6">
-                    <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#EditYoutubeModal" style="max-width:100%; height:auto;" id="addButton teacher" />
-                </div>
-                <div class="col-xs-6">
-                    <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#EditMP4Modal" style="max-width:100%; height:auto;" id="addButton teacher" />
-
-                </div>
-            </div>
-
         </div>
         <div class="col-2 listPane scrollable-menu referencePane">
             <div>
@@ -115,6 +105,8 @@
                     <option value="" selected disabled>New Reference</option>
                     <option value="Link">Link</option>
                     <option value="File">File</option>
+                    <option value="MP4">MP4</option>
+                    <option value="Youtube">Youtube</option>
                 </select>
 
             </div>
@@ -448,6 +440,7 @@
             if (this.value == 'Coding') {
                 $('#AddCodingModal').modal('show');
             }
+            
             go = false;
         } else { go = true; }
     }).on('blur', function () { go = false; });
@@ -464,6 +457,12 @@
             }
             if (this.value == 'File') {
                 $('#AddFileModal').modal('show');
+            }
+            if (this.value == 'MP4') {
+                $('#EditMP4Modal').modal('show');
+            }
+            if (this.value == 'Youtube') {
+                $('#EditYoutubeModal').modal('show');
             }
             go2 = false;
         } else { go2 = true; }

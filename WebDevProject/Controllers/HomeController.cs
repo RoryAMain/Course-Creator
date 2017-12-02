@@ -146,8 +146,25 @@ namespace WebDevProject.Controllers
             return View();
         }
 
-        [HttpPost("IndexUploadFile")]
-        public async Task<IActionResult> Post(int Id, IFormFile file)
+
+        [HttpGet]
+        public ActionResult IndexEditMP4(string Link, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+                Index theIndex = _context.Index.SingleOrDefault(ind => ind.Id == Id);
+                theIndex.MP4Link = Link;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        [HttpPost("IndexUploadMP4")]
+        public async Task<IActionResult> IndexPostMP4(int Id, IFormFile file)
         {
             ViewBag.Email = _userManager.GetUserName(HttpContext.User);
 
@@ -167,20 +184,65 @@ namespace WebDevProject.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult IndexEditMP4(string Link, int Id)
+        [HttpPost]
+        public ActionResult IndexAddLink(string Link, string Text, int Id)
         {
             if (ModelState.IsValid)
             {
                 ViewBag.Email = _userManager.GetUserName(HttpContext.User);
 
-                Index theIndex = _context.Index.SingleOrDefault(ind => ind.Id == Id);
-                theIndex.MP4Link = Link;
+                IndexReferenceList referenceList = new IndexReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.IndexId = Id;
+                _context.IndexReferenceList.Add(referenceList);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { Id = Id });
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult IndexAddFile(string Link, string Text, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+                IndexReferenceList referenceList = new IndexReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.IndexId = Id;
+                _context.IndexReferenceList.Add(referenceList);
+                _context.SaveChanges();
+                return RedirectToAction("Index", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost("IndexUploadFile")]
+        public async Task<IActionResult> IndexPostFile(int Id, IFormFile file)
+        {
+            ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+            long size = file.Length;
+            var filePath = ("wwwroot/upload/" + file.FileName);
+            string fileName = file.FileName;
+
+            if (file.Length > 0)
+            {
+                using (var stream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            var fileLink = "file:///" + filePath;
+
+            return RedirectToAction("IndexAddFile", new { Link = fileLink, Text = fileName, Id = Id });
+
         }
 
         //Module Actions
@@ -302,8 +364,24 @@ namespace WebDevProject.Controllers
             return View();
         }
 
-        [HttpPost("ModuleUploadFile")]
-        public async Task<IActionResult> ModulePost(int Id, IFormFile file)
+        [HttpGet]
+        public ActionResult ModuleEditMP4(string Link, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+                Module theModule = _context.Module.SingleOrDefault(mod => mod.Id == Id);
+                theModule.MP4Link = Link;
+                _context.SaveChanges();
+                return RedirectToAction("ModuleView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost("ModuleUploadMP4")]
+        public async Task<IActionResult> ModulePostMP4(int Id, IFormFile file)
         {
             ViewBag.Email = _userManager.GetUserName(HttpContext.User);
 
@@ -323,20 +401,65 @@ namespace WebDevProject.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult ModuleEditMP4(string Link, int Id)
+        [HttpPost]
+        public ActionResult ModuleAddLink(string Link, string Text, int Id)
         {
             if (ModelState.IsValid)
             {
                 ViewBag.Email = _userManager.GetUserName(HttpContext.User);
 
-                Module theModule = _context.Module.SingleOrDefault(mod => mod.Id == Id);
-                theModule.MP4Link = Link;
+                ModuleReferenceList referenceList = new ModuleReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.ModuleId = Id;
+                _context.ModuleReferenceList.Add(referenceList);
                 _context.SaveChanges();
                 return RedirectToAction("ModuleView", new { Id = Id });
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult ModuleAddFile(string Link, string Text, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+                ModuleReferenceList referenceList = new ModuleReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.ModuleId = Id;
+                _context.ModuleReferenceList.Add(referenceList);
+                _context.SaveChanges();
+                return RedirectToAction("ModuleView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpPost("ModuleUploadFile")]
+        public async Task<IActionResult> ModulePostFile(int Id, IFormFile file)
+        {
+            ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+            long size = file.Length;
+            var filePath = ("wwwroot/upload/" + file.FileName);
+            string fileName = file.FileName;
+
+            if (file.Length > 0)
+            {
+                using (var stream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            var fileLink = "file:///" + filePath;
+
+            return RedirectToAction("ModuleAddFile", new { Link = fileLink, Text = fileName, Id = Id });
+
         }
 
 

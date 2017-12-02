@@ -37,7 +37,7 @@
 
 
             </div>
-            <div class="jumbotron col-8 scrollable-menu">
+            <div class="jumbotron col-10 scrollable-menu">
 
                 <h3>@Html.DisplayFor(model => model.theQuestion.questionString)</h3>
                 <br />
@@ -70,18 +70,6 @@
                         <div id="editor2"></div>
                     </div>
                 </div>
-            </div>
-            <div class="col-2 listPane scrollable-menu referencePane">
-                <div>
-                    @foreach (var item in Model.referenceList)
-                    {
-                        <a href="@item.Link">@item.Text</a>
-                            <br />
-                    }
-                </div>
-
-                <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddReferenceModal" style="max-width:100%; height:auto;" id="addButton teacher" />
-
             </div>
         </div>
     </div>
