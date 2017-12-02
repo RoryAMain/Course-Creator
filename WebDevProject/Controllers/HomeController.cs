@@ -467,7 +467,26 @@ namespace WebDevProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult TopicAddReference(string Link, string Text, int Id)
+        public ActionResult TopicAddLink(string Link, string Text, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+                TopicReferenceList referenceList = new TopicReferenceList();
+                referenceList.Link = Link;
+                referenceList.Text = Text;
+                referenceList.TopicId = Id;
+                _context.TopicReferenceList.Add(referenceList);
+                _context.SaveChanges();
+                return RedirectToAction("TopicView", new { Id = Id });
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult TopicAddFile(string Link, string Text, int Id)
         {
             if (ModelState.IsValid)
             {
@@ -501,8 +520,8 @@ namespace WebDevProject.Controllers
             return View();
         }
 
-        [HttpPost("TopicUploadFile")]
-        public async Task<IActionResult> TopicPost(int Id, IFormFile file)
+        [HttpPost("TopicUploadMP4")]
+        public async Task<IActionResult> TopicPostMP4(int Id, IFormFile file)
         {
             ViewBag.Email = _userManager.GetUserName(HttpContext.User);
 
@@ -519,6 +538,29 @@ namespace WebDevProject.Controllers
             }
 
             return RedirectToAction("TopicEditMP4", new { Link = fileName, Id = Id });
+
+        }
+
+        [HttpPost("TopicUploadFile")]
+        public async Task<IActionResult> TopicPostFile(int Id, IFormFile file)
+        {
+            ViewBag.Email = _userManager.GetUserName(HttpContext.User);
+
+            long size = file.Length;
+            var filePath = ("wwwroot/upload/" + file.FileName);
+            string fileName = file.FileName;
+
+            if (file.Length > 0)
+            {
+                using (var stream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            var fileLink = "file:///" + filePath;
+
+            return RedirectToAction("TopicAddFile", new { Link = fileLink, Text = fileName, Id = Id });
 
         }
 
