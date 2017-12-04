@@ -9,6 +9,7 @@
     <Folder Include="Controllers\Web\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\mp4\" />
     <Folder Include="wwwroot\upload\" />
   </ItemGroup>
 

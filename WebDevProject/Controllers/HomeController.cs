@@ -239,7 +239,7 @@ namespace WebDevProject.Controllers
                 }
             }
 
-            var fileLink = "file:///" + filePath;
+            var fileLink = "../../upload/" + file.FileName;
 
             return RedirectToAction("IndexAddFile", new { Link = fileLink, Text = fileName, Id = Id });
 
@@ -456,7 +456,7 @@ namespace WebDevProject.Controllers
                 }
             }
 
-            var fileLink = "file:///" + filePath;
+            var fileLink = "upload/" + file.FileName;
 
             return RedirectToAction("ModuleAddFile", new { Link = fileLink, Text = fileName, Id = Id });
 
@@ -681,7 +681,7 @@ namespace WebDevProject.Controllers
                 }
             }
 
-            var fileLink = "file:///" + filePath;
+            var fileLink = "upload/" + file.FileName;
 
             return RedirectToAction("TopicAddFile", new { Link = fileLink, Text = fileName, Id = Id });
 
