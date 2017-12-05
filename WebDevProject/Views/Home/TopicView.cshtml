@@ -7,6 +7,18 @@
         <!-- The leftpane holds the list/buttons. The col-4 defines it as 4 panels wide in bootstrap, the scrollable-menu lets the CSS define it as a scrolling element, and the leftPane lets the CSS customize it specifically. -->
         <div class="col-2 scrollable-menu leftPane listPane">
             <div>
+                <button type="button" class="btn btn-primary" id="backButton">Back</button>
+                @{ bool isEndOfList = false;}
+                @if (Model.theTopic.topicOrder < Model.orderListLength)
+                {
+                    isEndOfList = false;
+                    <button type="button" class="btn btn-success" id="nextButton">Next</button>
+                }
+                else
+                {
+                    isEndOfList = true;
+                    <button type="button" class="btn btn-success" id="finishButton">Finish</button>
+                }
                 <!--  Right now all the list items are just text, but we should be able to replace them with the button things. -->
                 @{ var topicId = Html.DisplayFor(model => model.theTopic.Id);}
                 @foreach (var item in Model.Questions)
@@ -519,4 +531,31 @@
             } else { go = true; }
         }).on('blur', function () { go = false; });
 
+</script>
+
+@{ string nextURL = "";}
+@{
+    if (!isEndOfList)
+    {
+        nextURL = "/Home/TopicView/" + Model.theTopic.ModuleId;
+    }
+}
+@{ string finishURL = "/Home/ModuleView/" + Model.theTopic.ModuleId;}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            $("#backButton").click(function () {
+                window.location.href = "@finishURL";
+            });
+
+            $("#nextButton").click(function () {
+                window.location.href = "@nextURL";
+            });
+
+            $("#finishButton").click(function () {
+                    window.location.href = "@finishURL";
+                });
+        });
 </script>

@@ -286,6 +286,22 @@ namespace WebDevProject.Controllers
                                        }).ToList();
             }
 
+            var moduleInfo = from mod in _context.Module
+                               select mod;
+
+            var orderListLength = moduleInfo.Count();
+            model.orderListLength = orderListLength - 1;
+
+            if (moduleInfo != null)
+            {
+                model.moduleList = (from mod in moduleInfo
+                                      select new Module()
+                                      {
+                                          Id = mod.Id,
+                                          moduleOrder = mod.moduleOrder
+                                      }).ToList();
+            }
+
             return View(model);
         }
 
@@ -503,6 +519,26 @@ namespace WebDevProject.Controllers
                                            Link = reference.Link,
                                            Text = reference.Text
                                        }).ToList();
+            }
+
+            var moduleId = from top in _context.Topic
+                           where top.Id == Id
+                           select top.ModuleId;
+
+            var topicInfo = from top in _context.Topic
+                               where top.ModuleId == moduleId.SingleOrDefault()
+                               select top;
+
+            var orderListLength = questionInfo.Count();
+            model.orderListLength = orderListLength - 1;
+
+            if (topicInfo != null)
+            {
+                model.topicList = (from top in topicInfo
+                                      select new Topic()
+                                      {
+                                          topicOrder = top.topicOrder
+                                      }).ToList();
             }
 
             return View(model);
