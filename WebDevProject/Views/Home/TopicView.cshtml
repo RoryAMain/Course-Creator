@@ -92,16 +92,6 @@
                 }
             </div>
 
-            <div class="row" id="teacher">
-                <div class="col-xs-6">
-                    <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#EditYoutubeModal" style="max-width:100%; height:auto;" id="addButton teacher" />
-                </div>
-                <div class="col-xs-6">
-                    <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#EditMP4Modal" style="max-width:100%; height:auto;" id="addButton teacher" />
-
-                </div>
-            </div>
-
         </div>
         <div class="col-2 listPane scrollable-menu referencePane">
             <div>
@@ -110,10 +100,41 @@
                     <a href="@item.Link">@item.Text</a>
                     <br />
                 }
-                <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddReferenceModal" style="max-width:100%; height:auto;" id="addButton teacher" />
+
+                <select class="form-control" id="referenceSelect" style="height:auto" name="ReferenceType">
+                    <option value="" selected disabled>New Reference</option>
+                    <option value="Link">Link</option>
+                    <option value="File">File</option>
+                    <option value="MP4">MP4</option>
+                    <option value="Youtube">Youtube</option>
+                </select>
+
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-2 pull-left">
+            <button type="button" class="btn btn-primary" id="backButton" style="display:block; width:100%;">Back</button>
+        </div>
+        <div class="col-8">
+
+        </div>
+        <div class="col-2 pull-right">
+            @{ bool isEndOfList = false;}
+            @if (Model.theTopic.topicOrder < Model.orderListLength)
+            {
+                isEndOfList = false;
+                <button type="button" class="btn btn-success" id="nextButton" style="display:block; width:100%;">Next</button>
+            }
+            else
+            {
+                isEndOfList = true;
+                <button type="button" class="btn btn-success" id="finishButton" style="display:block; width:100%;">Finish</button>
+            }
+        </div>
+    </div>
+
 </div>
 
 
@@ -260,8 +281,8 @@
     </div>
 </div>
 
-<!--Modal for adding a new Reference-->
-<div class="modal fade" id="AddReferenceModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+<!--Modal for adding a new Link-->
+<div class="modal fade" id="AddLinkModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
     <div class="modal-dialog" style="transform: translate(0, 0%);">
         <div class="modal-content">
             <div class="modal-header" style="display:block">
@@ -273,7 +294,7 @@
 
             <div class="modal-body">
                 <!-- The form is placed inside the body of modal -->
-                @using (Html.BeginForm("TopicAddReference", "Home", new { Id = Model.theTopic.Id }, FormMethod.Post))
+                @using (Html.BeginForm("TopicAddLink", "Home", new { Id = Model.theTopic.Id }, FormMethod.Post))
                 {
                     <form id="createForm" class="form-horizontal">
                         <div class="row form-group">
@@ -298,6 +319,40 @@
                         </div>
                     </form>
                 }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal for adding File-->
+<div class="modal fade" id="AddFileModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog" style="transform: translate(0, 0%);">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Add File</h5>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                <form id="createForm" class="form-horizontal" method="post" enctype="multipart/form-data" asp-controller="TopicUploadFile" asp-action="Index">
+                    <div class="row form-group">
+                        <label class="col-xs-3 control-label">File:</label>
+                        <div class="col-xs-5">
+                            <input type="file" name="file" />
+                            <input type="hidden" name="Id" readonly value="@Model.theTopic.Id">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <input type="submit" class="btn btn-primary" value="Save">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -352,7 +407,7 @@
 
             <div class="modal-body">
                 <!-- The form is placed inside the body of modal -->
-                <form id="createForm" class="form-horizontal" method="post" enctype="multipart/form-data" asp-controller="TopicUploadFile" asp-action="Index">
+                <form id="createForm" class="form-horizontal" method="post" enctype="multipart/form-data" asp-controller="TopicUploadMP4" asp-action="Index">
                     <div class="row form-group">
                         <label class="col-xs-3 control-label">MP4 Link:</label>
                         <div class="col-xs-5">
@@ -408,9 +463,33 @@
             if (this.value == 'Coding') {
                 $('#AddCodingModal').modal('show');
             }
+            
             go = false;
         } else { go = true; }
     }).on('blur', function () { go = false; });
+
+</script>
+
+<script>
+
+    var go2 = false;
+    $('#referenceSelect').on('click', function () {
+        if (go2) {
+            if (this.value == 'Link') {
+                $('#AddLinkModal').modal('show');
+            }
+            if (this.value == 'File') {
+                $('#AddFileModal').modal('show');
+            }
+            if (this.value == 'MP4') {
+                $('#EditMP4Modal').modal('show');
+            }
+            if (this.value == 'Youtube') {
+                $('#EditYoutubeModal').modal('show');
+            }
+            go2 = false;
+        } else { go2 = true; }
+    }).on('blur', function () { go2 = false; });
 
 </script>
 
@@ -463,4 +542,31 @@
             } else { go = true; }
         }).on('blur', function () { go = false; });
 
+</script>
+
+@{ string nextURL = "";}
+@{
+    if (!isEndOfList)
+    {
+        nextURL = "/Home/TopicView/" + Model.theTopic.ModuleId;
+    }
+}
+@{ string finishURL = "/Home/ModuleView/" + Model.theTopic.ModuleId;}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            $("#backButton").click(function () {
+                window.location.href = "@finishURL";
+            });
+
+            $("#nextButton").click(function () {
+                window.location.href = "@nextURL";
+            });
+
+            $("#finishButton").click(function () {
+                    window.location.href = "@finishURL";
+                });
+        });
 </script>

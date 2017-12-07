@@ -91,3 +91,7 @@
     width: 300px;
     margin: 300px auto;
 }
+
+.editor-toolbar{
+    background-color:white;
+}
