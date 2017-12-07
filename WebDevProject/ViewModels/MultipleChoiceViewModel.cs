@@ -12,6 +12,6 @@ namespace WebDevProject.Models
         public List<Question> questionList { get; set; }
         public int orderListLength { get; set; }
         public IList<QuestionReferenceList> referenceList { get; set; }
-
+        public int selectedAnswer { get; set; }
     }
 }

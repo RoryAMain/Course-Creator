@@ -586,6 +586,22 @@ namespace WebDevProject.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult submitMultipleChoice(int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                MultipleChoiceViewModel model = new MultipleChoiceViewModel();
+                model.selectedAnswer = 0;
+                Question question = _context.Question.SingleOrDefault(quest => quest.Id == Id);
+
+                model.theQuestion = question;
+                return RedirectToAction("MultipleChoiceView", new { Id = Id });
+            }
+
+            return View();
+        }
+
 
 
         //Code Question Actions

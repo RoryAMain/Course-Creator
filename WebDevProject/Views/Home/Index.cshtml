@@ -1,4 +1,6 @@
 ﻿@model WebDevProject.Models.IndexViewModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 <!-- This container div holds the whole page. -->
 <div class="container mainBody">
     <!-- The row div holds the left and right pane, which is a majority of the page. -->
@@ -13,8 +15,9 @@
                         <br />
                 }
             </div>
-
-            <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddItemModal" style="max-width:100%; height:auto;" id="addButton teacher" />
+@if (await AuthorizationService.AuthorizeAsync(User, "CanEdit"))
+{
+            <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddItemModal" style="max-width:100%; height:auto;" id="addButton teacher" />}
         </div>
 
         <!-- The rightPane holds all instructor material. Later it can also be covered up by expanding lists, which I haven't made. col-8 defines it as 8 pandels wide in bootstrap, scrollable-menu let's CSS apply scrolling to it, and rightPane allows CSS to customize it specifically. -->
@@ -23,12 +26,14 @@
             <!-- This place can be filled with teacher supplied text. We should probably still sanitize this input somehow. -->
             <textarea id="textEditor">@Model.theIndex.lectureText</textarea>
 
+            @if (await AuthorizationService.AuthorizeAsync(User, "CanEdit")) {
             <div class="row" id="teacher">
                 <div class="btn-group col-sm-12" role="group">
                     <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveLecture()">
                     <input name="editLectureButton" id="editLecture" type="button" class="btn-sm btn-primary" style="float:right;" value="Edit" onclick="teacherModeToggle()">
                 </div>
             </div>
+            }
 
             <!--This form is hidden and sends the updated lecture text to the controller. It is triggered by the save button above.-->
             <form method="post" name="editLecture" asp-controller="IndexEditLecture" asp-action="Index">
@@ -77,6 +82,7 @@
                     }
                 }
             </div>
+@if (await AuthorizationService.AuthorizeAsync(User, "CanEdit")) { 
             <div class="row" id="teacher">
                 <div class="col-xs-6">
                     <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#EditYoutubeModal" style="max-width:100%; height:auto;" id="addButton teacher" />
@@ -86,6 +92,7 @@
 
                 </div>
             </div>
+            }
         </div>
         <div class="col-2 listPane scrollable-menu referencePane">
             @foreach (var item in Model.referenceList)
@@ -93,7 +100,9 @@
                 <a href="@item.Link">@item.Text</a>
                         <br />
             }
-            <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddReferenceModal" style="max-width:100%; height:auto;" id="addButton teacher" />
+@if (await AuthorizationService.AuthorizeAsync(User, "CanEdit"))
+{
+            <input type="image" src="~/img/PlusButton.png" data-toggle="modal" data-target="#AddReferenceModal" style="max-width:100%; height:auto;" id="addButton teacher" />}
         </div>
     </div>
 </div>

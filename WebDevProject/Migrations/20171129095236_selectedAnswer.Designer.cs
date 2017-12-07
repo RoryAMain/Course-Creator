@@ -8,8 +8,8 @@ using WebDevProject.Models;
 namespace WebDevProject.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    [Migration("20171129071607_Initial")]
-    partial class Initial
+    [Migration("20171129095236_selectedAnswer")]
+    partial class selectedAnswer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

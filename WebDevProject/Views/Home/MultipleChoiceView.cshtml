@@ -21,47 +21,54 @@
         <div class="col-8 jumbotron multChoicePane scrollable-menu">
             <h3>@Html.DisplayFor(model => model.theQuestion.questionString)</h3>
             
-            <!--
-            <div class="radio">
-                <input type="radio" asp-for="" /><label>@Html.DisplayFor(model => model.theQuestion.multipleChoice1)</label>
+            <form asp-action="submitMultipleChoice" method="post">
+                <div class="radio">
+                    <input type="radio" asp-for="selectedAnswer" value=1 /><label>@Html.DisplayFor(model => model.theQuestion.multipleChoice1)</label>
                 </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice2)</label>
+                <div class="radio">
+                    <input type="radio" asp-for="selectedAnswer" value=2 /><label>@Html.DisplayFor(model => model.theQuestion.multipleChoice2)</label>
                 </div>
                 @if (Model.theQuestion.multipleChoice3 != "" && Model.theQuestion.multipleChoice3 != null)
             {
                     <div class="radio">
-                        <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice3)</label>
-                        </div>
+                        <input type="radio" asp-for="selectedAnswer" value=3 /><label>@Html.DisplayFor(model => model.theQuestion.multipleChoice3)</label>
+                    </div>
                         @if (Model.theQuestion.multipleChoice4 != "" && Model.theQuestion.multipleChoice4 != null)
                 {
                             <div class="radio">
-                                <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice4)</label>
-                                </div>
-                                }
-                                }
+                                <input type="radio" asp-for="selectedAnswer" value=4 /><label>@Html.DisplayFor(model => model.theQuestion.multipleChoice1)</label>
+                            </div>
+                        }
+                }
 
-                -->
+                <input type="submit" value="submit" />
+
+            </form>
+
+            <!--
+                        <div class="radio">
+                            <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice1)</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice2)</label>
+                        </div>
+                        @if (Model.theQuestion.multipleChoice3 != "" && Model.theQuestion.multipleChoice3 != null)
+                        {
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice3)</label>
+                            </div>
+                            @if (Model.theQuestion.multipleChoice4 != "" && Model.theQuestion.multipleChoice4 != null)
+                            {
+                                <div class="radio">
+                                    <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice4)</label>
+                                </div>
+                            }
+                         }
+                        -->
+
+
 
                                 
-                                <div class="radio">
-                                    <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice1)</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice2)</label>
-                                </div>
-                                @if (Model.theQuestion.multipleChoice3 != "" && Model.theQuestion.multipleChoice3 != null)
-                                {
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice3)</label>
-                                    </div>
-                                    @if (Model.theQuestion.multipleChoice4 != "" && Model.theQuestion.multipleChoice4 != null)
-                                    {
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice4)</label>
-                                        </div>
-                                    }
-                                 }
                                 
                                 <button type="button" class="btn btn-success submitButton">Submit</button>
                                 @{ bool isEndOfList = false;}
