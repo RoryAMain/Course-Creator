@@ -95,3 +95,15 @@
 .editor-toolbar{
     background-color:white;
 }
+
+.btn-link {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #FFC425;
+    padding: 0;
+    text-decoration: underline;
+    font-family: inherit;
+    font-size: inherit;
+}

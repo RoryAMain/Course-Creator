@@ -11,7 +11,7 @@ using WebDevProject.Models;
 
 namespace WebDevProject.Controllers
 {
-    //[Authorize(Roles = "Member, Admin, Instructor")]
+    [Authorize(Roles = "Admin")]
     public class MemberHomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

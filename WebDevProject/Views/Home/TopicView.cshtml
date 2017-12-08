@@ -1,4 +1,6 @@
 ﻿@model WebDevProject.Models.TopicViewModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 <!-- This container div holds the whole page. -->
 <div class="container mainBody">
     <!-- The row div holds the left and right pane, which is a majority of the page. -->
@@ -24,11 +26,14 @@
                 }
             </div>
 
-            <select class="form-control" id="questionSelect" style="height:auto" name="QuestionType">
-                <option value="" selected disabled>New Question</option>
-                <option value="Multiple Choice">Multiple Choice</option>
-                <option value="Coding">Coding</option>
-            </select>
+            @if (await AuthorizationService.AuthorizeAsync(User, "CanEdit"))
+                {
+                    <select class="form-control" id="questionSelect" style="height:auto" name="QuestionType">
+                        <option value="" selected disabled>New Question</option>
+                        <option value="Multiple Choice">Multiple Choice</option>
+                        <option value="Coding">Coding</option>
+                    </select>
+                }
 
         </div>
 
@@ -37,13 +42,15 @@
 
             <!-- This place can be filled with teacher supplied text. We should probably still sanitize this input somehow. -->
             <textarea id="textEditor">@Model.theTopic.lectureText</textarea>
-
-            <div class="row" id="teacher">
-                <div class="btn-group col-sm-12" role="group">
-                    <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveLecture()">
-                    <input name="editLectureButton" id="editLecture" type="button" class="btn-sm btn-primary" style="float:right;" value="Edit" onclick="teacherModeToggle()">
-                </div>
-            </div>
+            @if (await AuthorizationService.AuthorizeAsync(User, "CanEdit"))
+                {
+                    <div class="row" id="teacher">
+                        <div class="btn-group col-sm-12" role="group">
+                            <input id="saveLecture" type="button" class="btn-sm btn-success" style="float:right;" value="Save" onclick="saveLecture()">
+                            <input name="editLectureButton" id="editLecture" type="button" class="btn-sm btn-primary" style="float:right;" value="Edit" onclick="teacherModeToggle()">
+                        </div>
+                    </div>
+                }
 
             <!--This form is hidden and sends the updated lecture text to the controller. It is triggered by the save button above.-->
             <form method="post" name="editLecture" asp-controller="TopicEditLecture" asp-action="Index">
@@ -101,6 +108,8 @@
                     <br />
                 }
 
+        @if (await AuthorizationService.AuthorizeAsync(User, "CanEdit"))
+            {
                 <select class="form-control" id="referenceSelect" style="height:auto" name="ReferenceType">
                     <option value="" selected disabled>New Reference</option>
                     <option value="Link">Link</option>
@@ -108,6 +117,7 @@
                     <option value="MP4">MP4</option>
                     <option value="Youtube">Youtube</option>
                 </select>
+            }
 
             </div>
         </div>

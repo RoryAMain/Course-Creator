@@ -1,4 +1,6 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 <html>
 <head>
@@ -27,6 +29,14 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
 
     <div class="username">CURRENTLY LOGGED IN: @ViewBag.Email</div>
+    <div class="row username" style="padding-left: 15px;">
+        <form method="post" asp-controller="Account" asp-action="Logout">
+        <input type="submit" value="Logout" class="btn-link"/></form>
+        @if (await AuthorizationService.AuthorizeAsync(User, "CanEdit"))
+        {
+                <p> | </p><a asp-controller="UserManagement" asp-action="Index">Admin Options</a>
+        }
+    </div>
 
 </head>
 <body>
