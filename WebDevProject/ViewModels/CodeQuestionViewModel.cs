@@ -12,6 +12,8 @@ namespace WebDevProject.Models
         public List<Question> questionList { get; set; }
         public int orderListLength { get; set; }
         public IList<QuestionReferenceList> referenceList { get; set; }
+        public string pythonResult { get; set; }
+        public string pythonError { get; set; }
 
     }
 }

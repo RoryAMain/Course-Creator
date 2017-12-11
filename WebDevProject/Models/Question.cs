@@ -23,5 +23,6 @@ namespace WebDevProject.Models
         public int questionOrder { get; set; }
         public string MP4Link { get; set; }
         public string youtubeURL { get; set; }
+        public string compiledResult { get; set; }
     }
 }
