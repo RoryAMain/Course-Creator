@@ -8,9 +8,10 @@ using WebDevProject.Models;
 namespace WebDevProject.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    partial class ModelContextModelSnapshot : ModelSnapshot
+    [Migration("20171209011608_PythonCompileMigration")]
+    partial class PythonCompileMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.4")
@@ -255,6 +256,8 @@ namespace WebDevProject.Migrations
                     b.Property<string>("MP4Link");
 
                     b.Property<int>("TopicId");
+
+                    b.Property<string>("compiledError");
 
                     b.Property<string>("compiledResult");
 
