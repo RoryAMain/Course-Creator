@@ -32,6 +32,7 @@
     <div class="row username" style="padding-left: 15px;">
         <form method="post" asp-controller="Account" asp-action="Logout">
         <input type="submit" value="Logout" class="btn-link"/></form>
+        | <a asp-action="Index" asp-controller="Home">Home</a>
         @if (await AuthorizationService.AuthorizeAsync(User, "CanEdit"))
         {
                 <p> | </p><a asp-controller="UserManagement" asp-action="Index">Admin Options</a>
