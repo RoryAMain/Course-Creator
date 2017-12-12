@@ -1,7 +1,6 @@
 ﻿@model WebDevProject.Models.CodeQuestionViewModel
 <html lang="en">
 <head>
-    <title>CodeMirror in Action</title>
 
     <script src="js/vendor/jquery-1.9.1.js"></script>
 
@@ -19,10 +18,6 @@
     <div class="container mainBody">
         <div class="row">
             <div class="col-2 scrollable-menu questionPane">
-                @if (Model.theQuestion.lectureText != "")
-                {
-                    <textarea id="textEditortest">@Model.theQuestion.lectureText</textarea>
-                }
                 <div class="scrollable-menu leftPane listPane">
                     @foreach (var item in Model.questionList)
                     {
@@ -37,23 +32,42 @@
                             <br />
                         }
                     }
+
                 </div>
+
+
             </div>
-            <div class="jumbotron col-8 scrollable-menu">
-        
+            <div class="jumbotron col-10 scrollable-menu">
+
                 <h3>@Html.DisplayFor(model => model.theQuestion.questionString)</h3>
                 <br />
                 <div id="editor1-pane">
                     <div id="editor1"></div>
                 </div>
+
+                <div class="row">
+                    <div class="btn-group col-sm-12" role="group">
+                        <input id="saveButton" type="button" class="btn-sm btn-success" style="float:right;" value="Save">
+                    </div>
+                </div>
+
+
                 <div class="row">
                     <div class="col-6">
-                        <button type="button" class="btn btn-success compileButton" style="float:left">Compile</button>
-                        <button type="button" class="btn btn-success submitButton">Submit</button>
+
+                        @using (Html.BeginForm("QuestionRunPython", "Home", new { Id = Model.theQuestion.Id }, FormMethod.Post))
+                        {
+                            <form id="createForm" class="form-horizontal">
+                                <input type="hidden" name="TopicId" value="@Model.theQuestion.TopicId" />
+                                <input type="submit" class="btn btn-primary" value="Compile">
+                            </form>
+                        }
+
+                        <button type="button" class="btn btn-success submitButton" id="submitButton">Submit</button>
                         @{ bool isEndOfList = false;}
                         @if (Model.theQuestion.questionOrder < Model.orderListLength)
                         {
-                             isEndOfList = false;
+                            isEndOfList = false;
                             <button type="button" class="btn btn-success" id="nextButton">Next</button>
                         }
                         else
@@ -61,6 +75,7 @@
                             isEndOfList = true;
                             <button type="button" class="btn btn-success" id="finishButton">Finish</button>
                         }
+
                     </div>
                 </div>
                 <div>
@@ -71,33 +86,97 @@
                     </div>
                 </div>
             </div>
-            <div class="col-2 listPane scrollable-menu referencePane">
-                <div>
-                        @foreach (var item in Model.referenceList)
-                        {
-                            <a href="@item.Link">@item.Text</a>
-                            <br />
-                        }
+        </div>
+    </div>
+
+    <form method="post" name="editCode" asp-controller="QuestionEditCode" asp-action="Index" id="editCodeForm">
+        
+        <input type="hidden" name="writtenCode" value="" id="writtenCode"/>
+        <input type="hidden" name="Id" value="@Model.theQuestion.Id" />
+        <input type="hidden" name="topicId" value="@Model.theQuestion.TopicId" />
+    </form>
+
+
+    <!--Modal for adding a new Reference-->
+    <div class="modal fade" id="AddReferenceModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog" style="transform: translate(0, 0%);">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title">Create</h5>
+                </div>
+
+                <div class="modal-body">
+                    <!-- The form is placed inside the body of modal -->
+                    @using (Html.BeginForm("QuestionAddReference", "Home", new { Id = Model.theQuestion.Id }, FormMethod.Post))
+                    {
+                        <form id="createForm" class="form-horizontal">
+                            <div class="row form-group">
+                                <label class="col-xs-3 control-label">Link:</label>
+                                <div class="col-xs-5">
+                                    <input type="text" class="form-control" name="Link" />
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <label class="col-xs-3 control-label">Text:</label>
+                                <div class="col-xs-5">
+                                    <input type="text" class="form-control" name="Text" />
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="TopicId" value="@Model.theQuestion.TopicId" />
+                            <input type="hidden" name="isMultipleChoice" value="@Model.theQuestion.isMultipleChoice.ToString()" />
+
+                            <div class="row form-group">
+                                <div class="col-xs-5 col-xs-offset-3">
+                                    <input type="submit" class="btn btn-primary" value="Create">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    }
                 </div>
             </div>
         </div>
     </div>
-   @{ string nextURL = "";}
-@{
-    if (!isEndOfList)
-    {
-        if (Model.questionList[Model.theQuestion.questionOrder + 1].isMultipleChoice)
+
+
+
+
+    @{ string nextURL = "";}
+    @{
+        if (!isEndOfList)
         {
-            nextURL = "/Home/MultipleChoiceView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
-        }
-        else
-        {
-            nextURL = "/Home/CodeQuestionView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+            if (Model.questionList[Model.theQuestion.questionOrder + 1].isMultipleChoice)
+            {
+                nextURL = "/Home/MultipleChoiceView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+            }
+            else
+            {
+                nextURL = "/Home/CodeQuestionView/" + Model.questionList[Model.theQuestion.questionOrder + 1].Id + "/" + Model.theQuestion.TopicId;
+            }
         }
     }
-}
     @{ string finishURL = "/Home/TopicView/" + Model.theQuestion.TopicId;}
-    @{ var suppliedCode = Html.DisplayFor(model => model.theQuestion.suppliedCode);}
+    @{ string suppliedCodeIn = Model.theQuestion.suppliedCode;}
+    @{ string suppliedCode = "";}
+    @if(suppliedCodeIn!=null)
+    {
+        suppliedCode = suppliedCodeIn.Replace("\r\n","");
+
+    }
+    @{ string compiledResultIn = Model.theQuestion.compiledResult;}
+    @{ string compiledResult = "";}
+    @if (compiledResultIn != null)
+    {
+        compiledResult = compiledResultIn.Replace("\r\n", "");
+    }
+
+
+
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -110,9 +189,9 @@
            });
 
             window.codemirror2 = CodeMirror($('#editor2').get(0), {
-                value: "Output",
+                value: "@compiledResult",
                 mode: "python",
-                readOnly: true,
+                readOnly: false,
                 styleActiveLine: true,
                 lineNumbers: true,
                 });
@@ -124,19 +203,18 @@
             $("#nextButton").click(function () {
                 window.location.href = "@nextURL";
             });
+
+            $("#saveButton").click(function () {
+                document.getElementById("writtenCode").value = codemirror1.getValue();
+                document.getElementById("editCodeForm").submit();
+             });
+
         });
+
     </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <script src="~/lib/simplemde/dist/simplemde.min.js" type="text/javascript"></script>
-    <script>
-        const lectureArea = new SimpleMDE({
-            element: document.getElementById("textEditortest"),
-            spellChecker: false,
-            toolbar: false,
-            status: false,
-        });
-        lectureArea.togglePreview()
-    </script>
+
 </body>
 </html>

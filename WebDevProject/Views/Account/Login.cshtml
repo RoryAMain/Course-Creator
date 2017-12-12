@@ -1,0 +1,42 @@
+﻿@model WebDevProject.ViewModels.LoginViewModel
+@{
+    Layout = null;
+}
+
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+
+<!-- Below is links for our stylesheet and javascript. -->
+<link rel="stylesheet" href="~/css/HomePageStyleSheet.css">
+<style>
+    body {
+        background-image: url("/gradientwallpaper.png");
+        background-size: cover;
+    }
+</style>
+<center><img src="~/CSECOURSElogo.png" /></center>
+
+<form class="spacedout" method="post" asp-action="Login" asp-controller="Account">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="Email" style="color: white;"></label>
+        <input asp-for="Email" class="form-control"/>
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" style="color: white;"></label>
+        <input asp-for="Password" class="form-control"/>
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RememberMe" style="color: white;"></label>
+        <input asp-for="RememberMe"/>
+        <span asp-validation-for="RememberMe"></span>
+    </div>
+    <div>
+        <p><input type="submit" value="Log In" /></p>
+        <p><a asp-action="Register">Register</a></p>
+    </div>
+</form>

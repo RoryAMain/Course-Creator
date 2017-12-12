@@ -2,40 +2,44 @@
 <div class="container mainBody">
     <div class="row">
         <div class="col-2 scrollable-menu questionPane">
-            @if (Model.theQuestion.lectureText != "")
-            {
-                <textarea id="textEditortest">@Model.theQuestion.lectureText</textarea>
-            }
             <div class="scrollable-menu leftPane listPane">
                 @foreach (var item in Model.questionList)
                 {
-                    @if (item.isMultipleChoice)
-                    {
-                        <a href="/Home/MultipleChoiceView/@item.Id/@item.TopicId">Question @item.questionOrder</a>
-                        <br />
-                    }
-                    else
-                    {
-                        <a href="/Home/CodeQuestionView/@item.Id/@item.TopicId">Question @item.questionOrder</a>
-                        <br />
-                    }
+                @if (item.isMultipleChoice)
+                {
+                <a href="/Home/MultipleChoiceView/@item.Id/@item.TopicId">Question @item.questionOrder</a>
+                <br />
+                }
+                else
+                {
+                <a href="/Home/CodeQuestionView/@item.Id/@item.TopicId">Question @item.questionOrder</a>
+                <br />
+                }
                 }
             </div>
         </div>
-        <div class="col-8 jumbotron multChoicePane scrollable-menu">
+        <div class="col-10 jumbotron multChoicePane scrollable-menu">
             <h3>@Html.DisplayFor(model => model.theQuestion.questionString)</h3>
+              
             <div class="radio">
                 <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice1)</label>
             </div>
             <div class="radio">
                 <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice2)</label>
             </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice3)</label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice4)</label>
-            </div>
+            @if (Model.theQuestion.multipleChoice3 != "" && Model.theQuestion.multipleChoice3 != null)
+            {
+                <div class="radio">
+                    <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice3)</label>
+                </div>
+                @if (Model.theQuestion.multipleChoice4 != "" && Model.theQuestion.multipleChoice4 != null)
+                {
+                    <div class="radio">
+                        <label><input type="radio" name="optradio">@Html.DisplayFor(model => model.theQuestion.multipleChoice4)</label>
+                    </div>
+                }
+                }
+                                
             <button type="button" class="btn btn-success submitButton">Submit</button>
             @{ bool isEndOfList = false;}
             @if (Model.theQuestion.questionOrder < Model.orderListLength)
@@ -46,18 +50,9 @@
             else
             {
                 isEndOfList = true;
-                <button type="button" class="btn btn-success" id= "finishButton">Finish</button>
-            }
-        </div>
-        <div class="col-2 listPane scrollable-menu referencePane">
-            <div>
-                @foreach (var item in Model.referenceList)
-                {
-                    <a href="@item.Link">@item.Text</a>
-                    <br/>
-                }
-            </div>
-        </div>
+                <button type="button" class="btn btn-success" id="finishButton">Finish</button>
+            }   
+    </div>
     </div>
 </div>
 

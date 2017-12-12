@@ -16,12 +16,13 @@ namespace WebDevProject.Models
         public string multipleChoice2 { get; set; }
         public string multipleChoice3 { get; set; }
         public string multipleChoice4 { get; set; }
-        public int? correctMultipleChoice { get; set; }
+        public int correctMultipleChoice { get; set; }
         public string correctCodeAnswer { get; set; }
         public string lectureText { get; set; }
         public string suppliedCode { get; set; }
         public int questionOrder { get; set; }
         public string MP4Link { get; set; }
         public string youtubeURL { get; set; }
+        public string compiledResult { get; set; }
     }
 }
